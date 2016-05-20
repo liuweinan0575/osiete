@@ -1,0 +1,118 @@
+<div class="container">
+  <form class="form-horizontal" role="form">
+    <div class="col-md-8 col-md-offset-2">
+      <ul class="nav nav-pills" id="otherInfoTab">
+        <li class="active"><a href="#time_line">時間</a></li>
+        <li><a href="#complain">待ち合わせ所</a></li>
+        <li><a href="#sms_send">募集内容</a></li>
+        <li><a href="#order_path">制限設置</a></li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane active" id="time_line">
+          <div class="panel panel-default" style="height:300px">
+            <div class="panel-body">
+              <div class="row" >
+                <div class="col-md-8">
+                  <div class="form-group">
+                    <label class="col-md-4 control-label">日付:</label>
+                    <div class="col-md-8">
+                      <input type="date" ng-model="apply.day"class="form-control" placeholder="日期">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-md-4 control-label">時間:</label>
+                    <div class="col-md-8">
+                      <input type="time" ng-model="apply.time" class="form-control" placeholder="请输入名字">
+                    </div>                  
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="tab-pane" id="complain">
+          <div class="panel panel-default" style="height:300px;overflow-y:scroll">
+            <div class="panel-body">
+              <div class="row" >
+                <div class="col-md-8">
+                  <div class="form-group">
+                    <label class="col-md-4 control-label">都道府県</label>
+                    <div class="col-md-8">
+                      <input type="text" ng-model="apply.place" class="form-control" placeholder="请输入名字">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-md-4 control-label">詳細</label>
+                    <div class="col-md-8">
+                      <input type="text" ng-model="apply.detailPlace" class="form-control" placeholder="请输入名字">
+                    </div>
+                    <div class="col-md-8 col-md-offset-2" style="color:red">
+                      文字で表せないなら、特別な建物や道しるべを撮影し、アップロードしてもよい。
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-md-10 col-md-offset-2" >
+                      <div class="col-md-6" >
+                      <button class="btn btn-primary" ngf-select ng-model="files" ngf-multiple="true">Select upload files</button>
+                      file list
+                      </div>
+                      <div class="col-md-6" >
+                      <button type="button" ng-click="fileUpdate()" class="btn btn-primary btn-block">写真をアップロード</button>
+                      </div>
+                      
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="tab-pane" id="sms_send">
+          <div class="panel panel-default" style="height:300px">
+            <div class="panel-body">
+              <div class="row" >
+                <div class="col-md-8">
+                  <div class="form-group">
+                    <label class="col-md-4 control-label">内容</label>
+                    <div class="col-md-8">
+                      <input type="text" class="form-control" ng-model="apply.course" placeholder="请输入教学内容">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-md-4 control-label">時給</label>
+                    <div class="col-md-8">
+                      <input type="text" ng-model="apply.moneyCh" ng-change="ch2ja()" class="form-control" placeholder="参考额 150">
+                      <div style="text-align:center">約{{!!apply.moneyJa?apply.moneyJa:' '}}円</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="tab-pane" id="order_path">
+          <div class="panel panel-default" style="height:300px">
+            <div class="panel-body">
+              <div class="row">
+                <div class="col-md-6 col-md-offset-3" >
+                  <div class="form-group">
+                    応募者には必要な認証
+                    <br>
+                    <input type="checkbox" ng-model="apply.personAuth">身元認証
+                    <input type="checkbox" ng-model="apply.ability">日本語能力認証<br>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-md-2 col-md-offset-5" style="text-align:center">
+      <div class="form-group">
+        <button type="button" ng-click="publish()" class="btn btn-primary btn-block" >発表</button>
+      </div>
+    </div>
+  </form>
+</div>

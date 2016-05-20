@@ -1,0 +1,104 @@
+<div class="container">
+  <form class="form-horizontal" role="form">      
+    <div class="row" >     
+    	<div class="col-md-6">
+    		<div class="form-group">
+          <label class="col-md-4 control-label">{{strings.meetTime}}</label>
+          <div class="col-md-8">
+            <input type="date" ng-model="condition.day" class="form-control" placeholder="请输入时间" required>
+          </div>
+        </div>
+      </div>
+    	<div class="col-md-3">
+        <input type="checkbox" ng-model="condition.morning">
+        {{strings.morning}}
+        </input>
+        <input type="checkbox" ng-model="condition.afternoon">
+        {{strings.afternoon}}
+        </input>
+        <input type="checkbox" ng-model="condition.evening">
+        {{strings.evening}}
+        </input>
+    	</div>
+    	<div class="col-md-3">
+        <input type="checkbox" ng-model="condition.personAuth">
+    		{{strings.personAuth}}
+        </input>
+        <input type="checkbox" ng-model="condition.careerAuth">
+        {{strings.careerAuth}}
+        </input>
+    	</div>
+    </div>
+    <div class="row">
+    	<div class="col-md-6">
+        <div class="form-group">
+          <label class="col-md-4 control-label">{{strings.meetPlace}}</label>
+          <div class="col-md-8">
+            <input type="text" ng-model="condition.meetPlace" class="form-control" placeholder="请输入名字">
+          </div>
+        </div>
+    	</div>
+    	<div class="col-md-3">
+        <div class="form-group">
+          <label class="col-md-3 control-label">{{strings.salaryHour}}</label>
+          <div class="col-md-4">
+            <input type="number" ng-model="condition.larger" class="form-control" min="0"placeholder="大于">
+          </div>
+          <div class="col-md-4">
+            <input type="number" ng-model="condition.smaller" class="form-control" min="0"placeholder="小于">
+          </div>
+        </div>
+    	</div>
+    	<div class="col-md-3">
+        <button type="button" ng-click="search()" class="btn btn-primary">{{strings.search}}</button>	
+        <button type="button" ng-click="reset()" class="btn btn-primary">reset</button>	
+    	</div>
+      <div class="col-md-2">
+           
+      </div>
+    </div>
+  </form>
+  <p class="text-left"></p>
+  <div class="row" >
+    <div class="col-md-6">
+      <label>
+        {{strings.meetTimeAndPlace}}
+      </label>
+    </div>
+    <div class="col-md-2">
+      <label>
+        {{strings.salaryHour}}
+      </label>
+    </div>
+    <div class="col-md-4">
+      <label>
+        {{strings.authCondition}}
+      </label>
+    </div>
+  </div>
+  
+
+  <div class="list-group" >
+    <a href="#/jobs/{{job.id}}" ng-repeat="job in jobs" class="list-group-item">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="col-md-4">
+            {{job.day}}
+          </div>
+          <div class="col-md-2">
+            {{job.time}}
+          </div>
+          <div class="col-md-4">
+          {{job.place}}
+          </div>
+        </div>
+        <div class="col-md-2">
+          {{job.moneyCh}}元
+        </div>
+        <div class="col-md-4">
+          {{strings.personAuth}}<span ng-if="job.personAuth" class="icon-check"></span><span ng-if="!job.personAuth" class="icon-check-empty"></span>{{strings.careerAuth}}<span ng-if="job.ability" class="icon-check"></span><span ng-if="!job.ability" class="icon-check-empty"></span>
+        </div>
+      </div>
+    </a>    
+  </div>
+</div>

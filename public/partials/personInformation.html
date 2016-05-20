@@ -1,0 +1,55 @@
+<div class="container">
+  <form class="form-horizontal" role="form">
+    <div class="col-md-6 col-md-offset-3">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div class="panel-body">
+            <div class="row" >
+              <div class="col-md-10">
+                <div class="form-group">
+                  <label class="col-md-4 control-label">氏名</label>
+                  <div class="col-md-8">
+                    <input type="text" ng-model="user.name" class="form-control" placeholder="请输入名字">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-4 control-label">電話番号</label>
+                  <div class="col-md-8">
+                    <input type="text" ng-model="user.tel" class="form-control" placeholder="请输入名字">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-4 control-label">メール</label>
+                  <div class="col-md-8">
+                    <input type="text" ng-model="user.account" class="form-control" placeholder="请输入名字">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="meetTime" class="col-md-4 control-label">中国語能力</label>
+                  <div class="col-md-8">
+                    <input type="radio" ng-model="user.level" value="1">単語だけ読めるほど
+                    <br>
+                    <input type="radio" ng-model="user.level" value="2">簡単な文章読めるほど
+                    <br>
+                    <input type="radio" ng-model="user.level" value="3">簡単な会話できるほど
+                    <br>
+                    <input type="radio" ng-model="user.level" value="4">ぺらぺら喋れるほど
+                    <br>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-md-6 col-md-offset-4">
+                    <button type="button" ng-click="modify()" class="btn btn-primary btn-block" >修正</button>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-2">
+                身份<br>认证
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

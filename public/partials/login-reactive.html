@@ -1,0 +1,40 @@
+<div class="container">
+  <form class="form-horizontal" role="form">  
+    <div class="col-md-12" style="text-align:center">
+      <div class="form-group">
+          <label class="control-label" style="font-size:32px">
+            スワード再設定申請
+          </label>
+      </div>
+      <div class="form-group">
+          <input type="email" class="form-control" id="email" placeholder="  这里填写错误提示">
+      </div>
+      <div class="form-group" style="text-align:left">
+        ユーザー登録後にお送りする仮登録メールは、通常すぐに配信されますが、数時間経ってもメールを受信できない、またはメールを紛失した場合は、下記フォームにメールアドレスを入力し再送信をお試しください。         
+      </div>
+    </div>
+    	<div class="col-md-4 col-md-offset-4" style="text-align:center">
+        
+    		<div class="form-group">
+          <input type="email" class="form-control" id="email" placeholder="ご登録メールアドレス">
+        </div>
+        <div class="form-group">
+          <label class="control-label">不正な利用を防ぐため認証を行います</label>
+        </div>
+        <div class="row">
+          <div class="well" style="position:relative">
+            <span style="font-size:20px">197838</span>
+            <div style="position:absolute;right:0;bottom:0;">
+              <a href="#/jobs/{{job.id}}">別の画像を表示する</a>           
+            </div>
+          </div> 
+        </div>  
+        <div class="form-group">
+          <input type="text" class="form-control" id="meetTime" placeholder="上の数字を入力">
+        </div>
+        <div class="form-group">
+          <button type="button" class="btn btn-primary btn-block" >再送信する</button> 
+        </div>
+    </div>
+  </form>
+</div>

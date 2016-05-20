@@ -1,0 +1,45 @@
+<div class="container" style="background:#fff">
+  <form class="form-horizontal" role="form">
+    <div class="col-md-12">
+      <div class="form-group">
+        <label class="control-label">
+          Title:
+        </label>
+        <input ng-model="question.title" class="form-control" placeholder=" 这里填写错误提示">       
+      </div>
+      <div class="form-group">
+        <label class="control-label">
+          Content:
+        </label>
+        <textarea rows="4" ng-model="question.content" style="width:100%" placeholder="全角5文字以上入力してください" />
+        <button type="button" ng-click="add()" class="btn btn-primary pull-right" >質問する</button>
+      </div>
+    </div>
+    <div class="col-md-6 col-md-offset-3" style="align:center">
+      <div class="form-group">
+        <div class="col-md-9">
+          <input ng-model="query" class="form-control" placeholder="キーワードで探す">
+        </div>
+        <div class="col-md-3">
+          <button type="button" class="btn btn-primary" >検索</button>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="list-group" >
+          <a ng-repeat="question in questions | filter:query" href="#/question/{{question.id}}"  class="list-group-item">
+            <div class="row">
+              <div class="col-md-8">
+                {{question.title}}
+              </div>
+              <div class="col-md-2">
+                {{question.date}}
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

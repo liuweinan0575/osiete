@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en" ng-app="osieteApp" ng-controller="IndexCtrl">
+  <head>
+    <!-- Required meta tags always come first -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>教えて</title>
+    <link rel="stylesheet" href="library/bootstrap/bootstrap.css">
+    <link rel="stylesheet" href="library/font-awesome/css/font-awesome.css">
+    <link rel="stylesheet" href="library/sharejs/css/share.min.css">
+    <link rel="stylesheet" href="library/zabuto/zabuto_calendar.min.css">
+    <link rel="stylesheet" href="library/ngToast/ngToast.min.css">
+    <link rel="stylesheet" href="library/ngToast/ngToast-animations.min.css">
+  </head>
+  <body >
+    <toast></toast>
+    <div class="container">
+      <nav class="navbar navbar-default" role="navigation">
+        
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#/"><i class="icon-comments icon-1x"></i>教えて</a>
+        </div>
+        <ul class="nav navbar-nav" ng-repeat="menu in menuList">
+          <li><a href={{menu.link}}>{{menu.name}}</a></li>
+        </ul>
+        <div class="pull-right">
+          <ul class="nav navbar-nav" ng-if="isLogined==='unlogined'">
+            <li><a href="#/login">ログイン</a></li>
+            <li><a href="#/register">登録</a></li>
+            <li><a href="#/help">ヘルプ</a></li>
+          </ul>
+          <ul class="nav navbar-nav" ng-if="isLogined!=='unlogined'">
+            <li class="dropdown">
+              <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Publiser: {{name}} <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="#/personInformation">個人情報</a></li>
+                <li><a href="#/passwordReset">パスワード変更</a></li>
+              </ul>
+            </li>
+            <li><a href="" ng-click="logout()">ログアウト</a></li>
+            <li><a href="#/help">ヘルプ</a></li>
+          </ul>
+        </div>
+        
+      </nav>
+    </div>
+    
+    <div class="container">
+      <div class="row pull-right">
+        <a href="" data-toggle="modal" data-target="#myModal2">feedback</a>
+      </div>
+    </div>
+    <div class="container">
+      <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title" id="myModalLabel">Enter your feedback:</h4>
+            </div>
+            <div class="modal-body">
+              <div class="form-group">
+                <textarea rows="4" ng-model="fbContent" style="width:100%" placeholder="全角5文字以上入力してください" />
+                </textarea>                
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" ng-click="submit()">Submit</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="view-container">
+        
+        <div ng-view class="view-frame"></div>
+      </div>
+      
+      <script src="library/jquery/jquery-2.1.4.js"></script>
+      <script src="library/underscore/underscore.js"></script>
+      <script src="library/bootstrap/bootstrap.js"></script>
+      <script src="library/moment/moment.js"></script>
+      
+      <script src="library/angular/angular-1.4.8.js"></script>
+      <script src="library/angular/angular-route.js"></script>
+      <script src="library/angular/angular-resource.js"></script>
+      <script src="library/angular/angular-animate-1.4.8.js"></script>
+      <script src="library/angular/angular-sanitize.js"></script>
+      <script src="library/sharejs/js/jquery.share.min.js"></script>
+      <script src="library/ngToast/ngToast.min.js"></script>
+      <script src="library/ngFile/ng-file-upload.min.js"></script>
+      <script src="library/ngFile/ng-file-upload-shim.min.js"></script>
+      <script src="library/md5/md5.min.js"></script>
+      
+      <script src="library/zabuto/zabuto_calendar.min.js"></script>
+      <script src="js/app.js"></script>
+      <script src="js/controller.js"></script>
+      <script src="js/services.js"></script>
+      <script src="js/util.js"></script>
+      <script src="js/controllers/jobDetailController.js"></script>
+      <script src="js/controllers/jobListController.js"></script>
+      <script src="js/controllers/loginController.js"></script>
+      <script src="js/controllers/applicationController.js"></script>
+      <script src="js/controllers/questionController.js"></script>
+      <script src="js/controllers/indexController.js"></script>
+      
+    </body>
+  </html>

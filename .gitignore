@@ -1,0 +1,9 @@
+# Dependency directory
+node_modules
+data
+lib
+start.bat
+packjson.txt
+tasks.txt
+
+

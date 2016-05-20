@@ -1,0 +1,46 @@
+<div class="container">
+  <form class="form-horizontal" role="form">  
+  	<div class="col-md-4 col-md-offset-4" style="text-align:center">
+      <div class="form-group">
+        <label class="control-label" style="font-size:24px">
+          登録
+        </label>
+      </div>
+  		<div class="form-group">
+        <input type="text" ng-model="registerInf.account" class="form-control" placeholder="メールアドレス" required>
+      </div>
+      <div class="form-group">
+        <input type="password" ng-model="registerInf.password" class="form-control" placeholder="パスワード、8文字以上">
+      </div>
+      <div class="form-group">
+        <input type="password" ng-model="registerInf.repetePwd" class="form-control" placeholder="パスワード、validation">
+      </div>
+      <div class="form-group">        
+          <input type="radio" ng-model="registerInf.userType" value="chinese">中国の方       
+          <input type="radio" ng-model="registerInf.userType" value="japanese">日本の方       
+      </div>
+      <div class="form-group">
+        <label class="control-label">不正な利用を防ぐため認証を行います</label>
+      </div>
+      <div class="row">
+        <div class="well" style="position:relative">
+          <span style="font-size:20px">{{registerInf.sixNumber}}</span>
+          <div style="position:absolute;right:0;bottom:0;">
+            <a href="" ng-click="changeSixNumber()">別の画像を表示する</a>           
+          </div>
+        </div> 
+      </div>  
+      <div class="form-group">
+        <input type="text" ng-model="registerInf.validNumber" class="form-control" id="meetTime" placeholder="上の数字を入力">
+      </div>
+
+      <div class="form-group">
+        <input type="checkbox" ng-model="registerInf.obeyItem">「教我」利用規約に同意します<br>
+        <a href="#/readme">「教我」利用規約全文を読む</a>        
+      </div>
+      <div class="form-group">
+        <button type="button" class="btn btn-primary btn-block" ng-click="register()">登録</button> 
+      </div>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,48 @@
+<div class="container" style="background:#fff">
+	<div class="row">
+		<div class="col-md-12">
+			<a href="#/question">戻す</a>
+		</div>
+		<div class="col-md-12">
+			<div class="form-group" style="text-align:center">
+				<span>Weinanさんへの評判</span>				
+			</div>
+		</div>
+		<div class="col-md-1 col-md-offset-4">
+			<div class="form-group">
+				<a href="" ng-click="filterComment('all')">所有</a>
+			</div>
+		</div>
+		<div class="col-md-1">
+			<div class="form-group">
+				<a href="" ng-click="filterComment('good')">好評</a>
+			</div>
+		</div>
+		<div class="col-md-1">
+			<div class="form-group">
+				<a href="" ng-click="filterComment('notBad')">還行</a>
+			</div>
+		</div>
+		<div class="col-md-1">
+			<div class="form-group">
+				<a href="" ng-click="filterComment('bad')">差評</a>
+			</div>
+		</div>
+	</div>
+	<div class="row" ng-if="comments.length>0">
+		  <div class="list-group" >
+    
+		<div ng-repeat="comment in comments" class="list-group-item">
+				<div class="form-group">
+					{{comment.comment}}
+					<br >
+					<br >
+					<span class="pull-right">{{comment.from}}さん</span>
+				</div>
+		</div>
+		</div>
+	</div>
+	<div class="row" ng-if="comments.length===0">
+		no comments
+	</div>
+</div>

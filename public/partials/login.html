@@ -1,0 +1,40 @@
+<div class="container">
+  <form class="form-horizontal" role="form">  
+  	<div class="col-md-4 col-md-offset-4" style="text-align:center">
+      <div class="form-group">
+        <label class="control-label" style="font-size:24px">
+          ログイン
+        </label>
+      </div>
+  		<div class="form-group">
+        <input ng-model="loginInf.account" class="form-control" placeholder="メールアドレス" required>
+      </div>
+      <div class="form-group">
+        <input type="password" class="form-control" placeholder="パスワード">
+      </div>
+      <div class="form-group">
+        <label class="control-label">不正な利用を防ぐため認証を行います</label>
+      </div>
+      <div class="row">
+        <div class="well" style="position:relative">
+          <span style="font-size:20px">{{loginInf.sixNumber}}</span>
+          <div style="position:absolute;right:0;bottom:0;">
+            <a href="" ng-click="changeSixNumber()">別の画像を表示する</a>      
+          </div>
+        </div> 
+      </div>  
+      <div class="form-group">
+        <input type="text" ng-model="loginInf.validNumber" class="form-control" id="meetTime" placeholder="上の数字を入力">
+      </div>
+      <div class="form-group">
+          <button type="button" ng-click="login()" class="btn btn-primary btn-block">ログイン</button> 
+      </div>
+      <div class="form-group">
+        <a href="#/login/reset">ログインできない方はこちら</a>
+      </div>
+      <div class="form-group">
+        <a href="#/register"><button type="button" class="btn btn-default btn-block" >新しく登録する</button> </a>
+      </div>
+    </div>
+  </form>
+</div>

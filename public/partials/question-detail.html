@@ -1,0 +1,72 @@
+<div class="container" style="background:#fff">
+	<div class="row">
+		<div class="col-md-12">
+			<a href="#/question">戻す</a>
+		</div>
+		<div class="col-md-12">
+			<div class="form-group" style="text-align:center">
+				<label class="control-label">{{question.title}}</label>
+			</div>
+			<div class="form-group " style="text-align:right">
+				 <div id="share-2"></div>
+				 <a href="#" class="social-share-icon icon-weibo"></a>
+			</div>
+			<hr>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="form-group">
+				<span>{{question.user}}さん</span><span class="pull-right">{{question.date}}</span>
+			</div>
+			<div class="col-md-12">
+				<div class="form-group">
+					{{question.content}}
+				</div>
+			</div>
+			<div class="form-group" >
+				<span>閲覧数：{{question.viewCount}}　　　　回答数：{{responses.length}}</span>
+				<button type="button" class="btn btn-link pull-right" data-toggle="modal" data-target="#myModal">
+				回答する
+				</button>
+			</div>
+			<hr>
+		</div>
+		<hr>
+	</div>
+	<div class="row" ng-if="responses.length>0">
+		<div class="col-md-12" ng-repeat="response in responses">
+			<div class="form-group">
+				<span>{{response.user}}さん</span><span class="pull-right">{{response.date}}</span>
+			</div>
+			<div class="col-md-12">
+				<div class="form-group">
+					{{response.content}}
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row" ng-if="responses.length===0">
+		no result
+	</div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="myModalLabel">{{question.title}}</h4>
+			</div>
+			<div class="modal-body">
+				<div class="form-group">
+					<textarea rows="4" ng-model="content" style="width:100%" placeholder="全角5文字以上入力してください" />
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-primary" ng-click="reply()">Save changes</button>
+			</div>
+		</div>
+	</div>
+</div>
