@@ -239,7 +239,8 @@ osieteControllers.controller('RegisterCtrl', ['$scope', 'AjaxService', 'ngToast'
       personAuth: false,
       ability: false,
       password: '',
-      repetePwd: ''
+      repetePwd: '',
+      pwd:''
     }
 
     $scope.changeSixNumber = function(){
@@ -282,7 +283,8 @@ osieteControllers.controller('RegisterCtrl', ['$scope', 'AjaxService', 'ngToast'
       delete registerInf.sixNumber;
       delete registerInf.validNumber;
       delete registerInf.repetePwd;
-      registerInf.password = md5(registerInf.password);
+      registerInf.pwd = md5(registerInf.password);
+      delete registerInf.password
 
       AjaxService.addUser(registerInf, function(data, status, headers, config) {
         console.log(data)
