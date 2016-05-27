@@ -1,15 +1,15 @@
 angular.module('loginController', [])
-.controller('LoginCtrl', ['$scope', 'AjaxService',
-  function($scope, AjaxService){
+.controller('LoginCtrl', ['$scope', 'AjaxService', 'ngToast',
+  function($scope, AjaxService, ngToast){
     //init loginInf obj
     $scope.loginInf = {
       account: '',
-      sixNumber: Math.floor(Math.random()*1000000)
+      password:''
     }
-    
+    $scope.sixNumber = Math.floor(Math.random()*1000000)+'';
     //event function
     $scope.changeSixNumber = function(){
-      $scope.loginInf.sixNumber=Math.floor(Math.random()*1000000);
+      $scope.sixNumber=Math.floor(Math.random()*1000000)+'';
     }
     $scope.login = function(){
       // if ($scope.account==='liu') {      
@@ -18,22 +18,58 @@ angular.module('loginController', [])
       //   window.location="#/";
       // };
       var loginInf = $scope.loginInf;
-      if (!loginInf.validNumber || loginInf.validNumber!=loginInf.sixNumber) {
-        console.log('Please enter correct sixNumber!')
-        $scope.loginInf.sixNumber = Math.floor(Math.random()*1000000);
+      var isValid = true;
+      var error = [];
+      if (!loginInf.account) {
+        error.push('Account cannot be empty!');
+        isValid = false;
+      }
+
+      if (!loginInf.password) {
+        error.push('password cannot be empty!');
+        isValid = false;
+      }
+
+      if (!$scope.validNumber || $scope.validNumber!==$scope.sixNumber) {
+        error.push('Wrong valid number!');
+        isValid = false;
+      }
+
+      if (!isValid) {
+        ngToast.create({
+          className: 'success',
+          content: error.join('<br>'),
+          dismissButton: true,
+          dismissOnTimeout: true
+        }); 
         return;
       }
-      AjaxService.userLogin($scope.loginInf, function(data, status, headers, config) {
-        if (data.length!==0) {
-          var user = data[0];
+
+      loginInf.pwd = md5(loginInf.password);
+      delete loginInf.password;
+      
+      AjaxService.userLogin(loginInf, function(data, status, headers, config) {
+        if (data.ok === 1) {
+          var user = data.user;
+          ngToast.create({
+            className: 'success',
+            content: data.message,
+            dismissButton: true,
+            dismissOnTimeout: true
+          }); 
           $scope.$emit("LoginOperation", user);
           localStorage.setItem("user",JSON.stringify(user));
           var exdate=new Date();
           exdate.setDate(exdate.getDate()+1);
-          document.cookie="userName="+user.name+";expires="+exdate.toGMTString();
-          window.location="#/";  
+          document.cookie="userName="+(user.name?user.name:user.account)+";expires="+exdate.toGMTString();
+          window.location="#/jobs";
         }else{
-          console.log('no such user')
+          ngToast.create({
+            className: 'danger',
+            content: data.message,
+            dismissButton: true,
+            dismissOnTimeout: true
+          }); 
         }
 
       }, function() {

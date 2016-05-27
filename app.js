@@ -193,7 +193,7 @@ anotherRouter.get('/users/activeUser/:id', function(req, res){
 });
 anotherRouter.post('/users/modify', function(req, res){ 
   var user =  req.body;
-  db.collection('users').update({id:user.id}, user, function(err, result){  
+  db.collection('users').findAndModify({id:user.id}, [], user, {new: false, upset: true}, function(err, result){  
     if (err) throw err;
     res.json(result);
   });
@@ -203,7 +203,23 @@ anotherRouter.post('/users/login', function(req, res){
   console.log(user.account)
   db.collection('users').find({account: user.account}).toArray(function(err, result) {
     if (err) throw err;
-    res.json(result);    
+    var backJson = {
+      ok:1
+    };
+    if (result.length === 0) {
+      backJson.ok=0;
+      backJson.message = 'No this user!';
+    } else {
+      if (user.pwd === result[0].pwd){
+        backJson.ok=1;
+        backJson.message = 'Login successfully!';
+        backJson.user = result[0];
+      } else {
+        backJson.ok=0;
+        backJson.message = 'Password not correct!';
+      }
+    }
+    res.json(backJson);
   });
   
 });

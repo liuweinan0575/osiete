@@ -16,13 +16,13 @@
                   <div class="form-group">
                     <label class="col-md-4 control-label">日付:</label>
                     <div class="col-md-8">
-                      <input type="date" ng-model="apply.day"class="form-control" placeholder="日期">
+                      <input type="date" ng-model="apply.date"class="form-control" placeholder="日期">
                     </div>
                   </div>
                   <div class="form-group">
                     <label class="col-md-4 control-label">時間:</label>
                     <div class="col-md-8">
-                      <input type="time" ng-model="apply.time" class="form-control" placeholder="请输入名字">
+                      <input type="time" ng-model="apply.time" class="form-control" >
                     </div>                  
                   </div>
                 </div>
@@ -38,19 +38,19 @@
                   <div class="form-group">
                     <label class="col-md-4 control-label">都道府県</label>
                     <div class="col-md-8">
-                      <input type="text" ng-model="apply.place" class="form-control" placeholder="请输入名字">
+                      <select ng-model="apply.distict" class="form-control" ng-options="x.id as x.name for x in disticts"></select>                     
                     </div>
                   </div>
                   <div class="form-group">
                     <label class="col-md-4 control-label">詳細</label>
                     <div class="col-md-8">
-                      <input type="text" ng-model="apply.detailPlace" class="form-control" placeholder="请输入名字">
+                      <input type="text" ng-model="apply.address" class="form-control" placeholder="请输入名字">
                     </div>
-                    <div class="col-md-8 col-md-offset-2" style="color:red">
+                    <!-- <div class="col-md-8 col-md-offset-2" style="color:red">
                       文字で表せないなら、特別な建物や道しるべを撮影し、アップロードしてもよい。
-                    </div>
+                    </div> -->
                   </div>
-                  <div class="form-group">
+                  <!-- <div class="form-group">
                     <div class="col-md-10 col-md-offset-2" >
                       <div class="col-md-6" >
                       <button class="btn btn-primary" ngf-select ng-model="files" ngf-multiple="true">Select upload files</button>
@@ -58,10 +58,9 @@
                       </div>
                       <div class="col-md-6" >
                       <button type="button" ng-click="fileUpdate()" class="btn btn-primary btn-block">写真をアップロード</button>
-                      </div>
-                      
+                      </div>                     
                     </div>
-                  </div>
+                  </div> -->
                 </div>
               </div>
             </div>
@@ -82,7 +81,7 @@
                     <label class="col-md-4 control-label">時給</label>
                     <div class="col-md-8">
                       <input type="text" ng-model="apply.moneyCh" ng-change="ch2ja()" class="form-control" placeholder="参考额 150">
-                      <div style="text-align:center">約{{!!apply.moneyJa?apply.moneyJa:' '}}円</div>
+                      <div style="text-align:center">約{{!!moneyJa?moneyJa:' '}}円</div>
                     </div>
                   </div>
                 </div>

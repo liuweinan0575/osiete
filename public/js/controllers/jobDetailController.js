@@ -7,8 +7,10 @@ angular.module('jobDetailController', [])
       console.log(data);
       $scope.apply = _.filter(data, { id: $routeParams.jobId })[0];
       console.log($scope.apply);
-      AjaxService.findUserById($scope.apply.owner, function(data, status, headers, config) {     
+      AjaxService.findUserById($scope.apply.ownerId, function(data, status, headers, config) {     
         $scope.owner = data[0];
+        var level = $scope.owner.jpLever;
+        $scope.owner.jpLevel = level === '1'?'単語だけ読めるほど':(level === '2'?'簡単な文章読めるほど':(level === '3'?'簡単な会話できるほど':'ぺらぺら喋れるほど'));
       }, function() {
       });
       AjaxService.findCommentsByUserId('Weinan', function(data, status, headers, config) {     
@@ -46,5 +48,9 @@ angular.module('jobDetailController', [])
 
     $scope.applyJob = function(){
       console.log('applyJob');
+    }
+
+    $scope.submitChat = function(){
+
     }
   }]);

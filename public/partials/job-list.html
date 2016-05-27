@@ -3,54 +3,63 @@
     <div class="row" >     
     	<div class="col-md-6">
     		<div class="form-group">
-          <label class="col-md-4 control-label">{{strings.meetTime}}</label>
+          <label class="col-md-4 control-label">待ち合わせ時間</label>
           <div class="col-md-8">
-            <input type="date" ng-model="condition.day" class="form-control" placeholder="请输入时间" required>
+            <input type="date" ng-model="condition.date" class="form-control" placeholder="请输入时间" required>
           </div>
         </div>
       </div>
     	<div class="col-md-3">
         <input type="checkbox" ng-model="condition.morning">
-        {{strings.morning}}
+        午前
         </input>
         <input type="checkbox" ng-model="condition.afternoon">
-        {{strings.afternoon}}
+        午後
         </input>
         <input type="checkbox" ng-model="condition.evening">
-        {{strings.evening}}
+        夜
         </input>
     	</div>
     	<div class="col-md-3">
         <input type="checkbox" ng-model="condition.personAuth">
-    		{{strings.personAuth}}
+    		募集者に身元認証が必要
         </input>
-        <input type="checkbox" ng-model="condition.careerAuth">
-        {{strings.careerAuth}}
+        <input type="checkbox" ng-model="condition.ability">
+        ability認証
         </input>
     	</div>
     </div>
     <div class="row">
     	<div class="col-md-6">
         <div class="form-group">
-          <label class="col-md-4 control-label">{{strings.meetPlace}}</label>
+          <label class="col-md-4 control-label">待ち合わせ場所</label>
           <div class="col-md-8">
-            <input type="text" ng-model="condition.meetPlace" class="form-control" placeholder="请输入名字">
+            <div class="row">
+              <div class="col-md-4">
+                <select ng-model="condition.distict" class="form-control" ng-options="x.id as x.name for x in disticts"></select>                     
+              </div>
+              <div class="col-md-8">
+                <input type="text" ng-model="condition.address" class="form-control" placeholder="请输入名字">                   
+              </div>
+            </div>
           </div>
         </div>
     	</div>
     	<div class="col-md-3">
         <div class="form-group">
-          <label class="col-md-3 control-label">{{strings.salaryHour}}</label>
-          <div class="col-md-4">
-            <input type="number" ng-model="condition.larger" class="form-control" min="0"placeholder="大于">
-          </div>
-          <div class="col-md-4">
-            <input type="number" ng-model="condition.smaller" class="form-control" min="0"placeholder="小于">
+          <div class="row">
+            <label class="col-md-3 control-label">時給</label>
+            <div class="col-md-4">
+              <input type="number" ng-model="condition.larger" class="form-control" min="0"placeholder="大于">
+            </div>
+            <div class="col-md-4">
+              <input type="number" ng-model="condition.smaller" class="form-control" min="0"placeholder="小于">
+            </div>
           </div>
         </div>
     	</div>
-    	<div class="col-md-3">
-        <button type="button" ng-click="search()" class="btn btn-primary">{{strings.search}}</button>	
+    	<div class="col-md-2">
+        <button type="button" ng-click="search()" class="btn btn-primary">検索</button>	
         <button type="button" ng-click="reset()" class="btn btn-primary">reset</button>	
     	</div>
       <div class="col-md-2">
@@ -58,21 +67,26 @@
       </div>
     </div>
   </form>
-  <p class="text-left"></p>
+  <hr>
   <div class="row" >
     <div class="col-md-6">
       <label>
-        {{strings.meetTimeAndPlace}}
+        待ち合わせ時間と場所
       </label>
     </div>
     <div class="col-md-2">
       <label>
-        {{strings.salaryHour}}
+        仕事内容
       </label>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-2">
       <label>
-        {{strings.authCondition}}
+        時給
+      </label>
+    </div>
+    <div class="col-md-2">
+      <label>
+        募集者
       </label>
     </div>
   </div>
@@ -82,21 +96,24 @@
     <a href="#/jobs/{{job.id}}" ng-repeat="job in jobs" class="list-group-item">
       <div class="row">
         <div class="col-md-6">
-          <div class="col-md-4">
-            {{job.day}}
+          <div class="col-md-3">
+            {{job.dateString}}
           </div>
           <div class="col-md-2">
-            {{job.time}}
+            {{job.timeString}}
           </div>
-          <div class="col-md-4">
-          {{job.place}}
+          <div class="col-md-6">
+            {{job.address}}
           </div>
+        </div>
+        <div class="col-md-2">
+          {{job.course}}元
         </div>
         <div class="col-md-2">
           {{job.moneyCh}}元
         </div>
-        <div class="col-md-4">
-          {{strings.personAuth}}<span ng-if="job.personAuth" class="icon-check"></span><span ng-if="!job.personAuth" class="icon-check-empty"></span>{{strings.careerAuth}}<span ng-if="job.ability" class="icon-check"></span><span ng-if="!job.ability" class="icon-check-empty"></span>
+        <div class="col-md-2">
+          身份认证<span ng-if="job.personAuth" class="icon-check"></span><span ng-if="!job.personAuth" class="icon-check-empty"></span>职业认证<span ng-if="job.ability" class="icon-check"></span><span ng-if="!job.ability" class="icon-check-empty"></span>
         </div>
       </div>
     </a>    

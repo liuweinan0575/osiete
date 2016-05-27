@@ -17,13 +17,13 @@
                            <div class="form-group">
                               <label class="col-md-4 control-label">日付:</label>
                               <div class="col-md-8">
-                                 <input type="text" ng-model="apply.day"class="form-control" placeholder="日期">
+                                 <input type="text" ng-model="apply.dateString"class="form-control" placeholder="日期" disabled>
                               </div>
                            </div>
                            <div class="form-group">
                               <label class="col-md-4 control-label">時間:</label>
                               <div class="col-md-8">
-                                 <input type="text" ng-model="apply.time" class="form-control" placeholder="请输入名字">
+                                 <input type="text" ng-model="apply.timeString" class="form-control" placeholder="请输入名字" disabled>
                               </div>
                            </div>
                         </div>
@@ -39,23 +39,23 @@
                            <div class="form-group">
                               <label class="col-md-4 control-label">都道府県</label>
                               <div class="col-md-8">
-                                 <input type="text" ng-model="apply.place" class="form-control" placeholder="请输入名字">
+                                 <select ng-model="apply.distict" class="form-control" ng-options="x.id as x.name for x in disticts" disabled></select> 
                               </div>
                            </div>
                            <div class="form-group">
                               <label class="col-md-4 control-label">詳細</label>
                               <div class="col-md-8">
-                                 <input type="text" ng-model="apply.detailPlace" class="form-control" placeholder="请输入名字">
+                                 <input type="text" ng-model="apply.address" class="form-control" placeholder="请输入名字" disabled>
                               </div>
-                              <div class="col-md-8 col-md-offset-2" style="color:red">
+                              <!-- <div class="col-md-8 col-md-offset-2" style="color:red">
                                  文字で表せないなら、特別な建物や道しるべを撮影し、アップロードしてもよい。
-                              </div>
+                              </div> -->
                            </div>
-                           <div class="form-group">
+                           <!-- <div class="form-group">
                               <div class="col-md-4 col-md-offset-4" >
                                  <button type="button" ng-click="fileUpdate()" class="btn btn-primary btn-block">写真をアップロード</button>
                               </div>
-                           </div>
+                           </div> -->
                         </div>
                      </div>
                   </div>
@@ -69,13 +69,13 @@
                            <div class="form-group">
                               <label class="col-md-4 control-label">内容</label>
                               <div class="col-md-8">
-                                 <input type="text" class="form-control" ng-model="apply.course" placeholder="请输入教学内容">
+                                 <input type="text" class="form-control" ng-model="apply.course" placeholder="请输入教学内容" disabled>
                               </div>
                            </div>
                            <div class="form-group">
                               <label class="col-md-4 control-label">時給</label>
                               <div class="col-md-8">
-                                 <input type="text" ng-model="apply.moneyCh" ng-change="ch2ja()" class="form-control" placeholder="参考额 150">
+                                 <input type="text" ng-model="apply.moneyCh" ng-change="ch2ja()" class="form-control" placeholder="参考额 150" disabled>
                                  <div style="text-align:center">約{{!!apply.moneyJa?apply.moneyJa:' '}}円</div>
                               </div>
                            </div>
@@ -92,25 +92,25 @@
                            <div class="form-group">
                               <label class="col-md-4 control-label">氏名</label>
                               <div class="col-md-8">
-                                 <input type="text" ng-model="owner.name" class="form-control" placeholder="请输入名字">
+                                 <input type="text" ng-model="owner.name" class="form-control" placeholder="请输入名字" disabled>
                               </div>
                            </div>
                            <div class="form-group">
                               <label class="col-md-4 control-label">電話番号</label>
                               <div class="col-md-8">
-                                 <input type="text" ng-model="owner.tel" class="form-control" placeholder="请输入名字">
+                                 <input type="text" ng-model="owner.tel" class="form-control" placeholder="请输入名字" disabled>
                               </div>
                            </div>
                            <div class="form-group">
                               <label class="col-md-4 control-label">メール</label>
                               <div class="col-md-8">
-                                 <input type="text" ng-model="owner.account" class="form-control" placeholder="请输入名字">
+                                 <input type="text" ng-model="owner.account" class="form-control" placeholder="请输入名字" disabled>
                               </div>
                            </div>
                            <div class="form-group">
                               <label for="meetTime" class="col-md-4 control-label">中国語能力</label>
                               <div class="col-md-8">
-                                 <input type="text" ng-model="owner.account" class="form-control" placeholder="feichanghao">
+                                 <input type="text" ng-model="owner.jpLevel" class="form-control" placeholder="feichanghao" disabled>
                               </div>
                            </div>
                            <div class="panel panel-default" style="height:120px">
@@ -187,7 +187,29 @@
       </div>     
    </form>
 </div>
-<div style="position:fixed; bottom: 200px; left: 50%; margin-left: 580px; width: 40px; height: 40px;" >
-   <a href="#/jobs"><i class="icon-reply icon-2x"></i></a>
-   <a href="#/jobs"><i class="icon-comments icon-2x"></i></a>
+<div style="position:fixed; top: 200px; left: 50%; margin-left: 580px; width: 40px; height: 40px;" >
+   <a href="" ng-click="goBack()"><i class="icon-reply icon-2x"></i></a>
+   <a href="" data-toggle="modal" data-target="#chatModal"><i class="icon-comments icon-2x"></i></a>
 </div>
+
+<div class="modal fade" id="chatModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title" id="myModalLabel">Chat to {{apply.ownerName}}:</h4>
+            </div>
+            <div class="modal-body">
+              <div class="form-group">
+                <textarea rows="4" ng-model="chatContent" style="width:100%" placeholder="全角5文字以上入力してください" />
+                </textarea>                
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" ng-click="submitChat()">Submit</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+

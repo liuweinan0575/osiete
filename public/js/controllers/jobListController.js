@@ -9,29 +9,68 @@ angular.module('jobListController', [])
     }, function() {
     });
 
+    $scope.condition={
+      evening: true,
+      afternoon: true, 
+      morning: true, 
+      ability: false, 
+      personAuth: false
+    };
+
     $scope.search = function(){
 
       var condition = $scope.condition;
+      
+      if (condition.smaller>=0 && condition.larger>=10 && condition.smaller<condition.larger) {
+        ngToast.create({
+          className: 'danger',
+          content: '前一个数字需要小于第二个数字',
+          dismissButton: true,
+          dismissOnTimeout: true
+        });
+        return;
+      }
       $scope.jobs = _.filter(jobs, function(job) { 
-        if (condition.day && condition.day === job.day) {
-          return true;
+        console.log(moment(condition.date).format('YYYY-MM-DD'));
+        console.log(job.dateString);
+        console.log(job.period);
+        
+        if (condition.date && moment(condition.date).format('YYYY-MM-DD') !== job.dateString) {
+          return false;
         }
-        if ((condition.morning && condition.morning===job.time) || (condition.afternoon && condition.afternoon===job.time) || (condition.evening && condition.evening===job.time) ) {
-          return true;
+        if (!condition[job.period]) {
+          return false;
         }
-        if (condition.place && condition.place === job.place) {
-          return true;
+        if (condition.ability !== job.ability) {
+          return false;
         }
-        if (condition.personAuth === job.personAuth || condition.careerAuth === job.careerAuth) {
-          return true;
+        if (condition.personAuth !== job.personAuth) {
+          return false;
         }
+        if (condition.distict && condition.distict !== job.distict) {
+          return false;
+        }
+
+        if (condition.address && job.address.indexOf(condition.address) === -1) {
+          return false;
+        }
+        if (condition.smaller<job.moneyCh || condition.larger>job.moneyCh) {
+          return false;
+        }
+        return true;
 
         
       });
     }
 
     $scope.reset = function(){
-      $scope.condition = {};
+      $scope.condition={
+        evening: true,
+        afternoon: true, 
+        morning: true, 
+        ability: false, 
+        personAuth: false
+      };
       $scope.jobs = jobs;
     }
   }]); 
