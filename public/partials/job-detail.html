@@ -76,7 +76,7 @@
                               <label class="col-md-4 control-label">時給</label>
                               <div class="col-md-8">
                                  <input type="text" ng-model="apply.moneyCh" ng-change="ch2ja()" class="form-control" placeholder="参考额 150" disabled>
-                                 <div style="text-align:center">約{{!!apply.moneyJa?apply.moneyJa:' '}}円</div>
+                                 <div style="text-align:center">約{{apply.moneyJa}}円</div>
                               </div>
                            </div>
                         </div>
@@ -85,7 +85,7 @@
                </div>
             </div>
             <div class="tab-pane" id="order_path">
-               <div class="panel panel-default" style="height:350px">
+               <div class="panel panel-default" style="height:350px;overflow-y:scroll">
                   <div class="panel-body">
                      <div class="row" >
                         <div class="col-md-10">
@@ -121,22 +121,22 @@
                                  <div class="row" >
                                     <div class="col-md-4">
                                        <div class="form-group">
-                                       好評：{{types.good}}
+                                       好評：{{types.good || 0}}
                                        </div>                                    
                                     </div>
                                     <div class="col-md-4">
                                        <div class="form-group">
-                                       還行：{{types.notBad}}    
+                                       還行：{{types.notBad || 0}}    
                                        </div>                                
                                     </div>
                                     <div class="col-md-4">
                                        <div class="form-group">
-                                       差評：{{types.bad}}
+                                       差評：{{types.bad || 0}}
                                        </div>                                   
                                     </div>
                                     <div class="col-md-4 col-md-offset-4">
                                        <div class="form-group">
-                                          <a href="#/comments" >詳しくはこちら</a>                                         
+                                          <a href="#/comments" >詳しくはこちら</a>                                   
                                        </div>
                                     </div>
                                  </div>
@@ -144,7 +144,7 @@
                            </div>
                         </div>
                         <div class="col-md-2">
-                           身份<br>认证
+                           身份认证<span ng-if="job.personAuth" class="icon-check"></span><span ng-if="!job.personAuth" class="icon-check-empty"></span><br>职业认证<span ng-if="job.ability" class="icon-check"></span><span ng-if="!job.ability" class="icon-check-empty"></span>
                         </div>
                      </div>
                   </div>
@@ -157,15 +157,20 @@
          <div class="col-md-4">
             <div class="form-group">
                <span style="color:red">何か不明な所あるなら</span>
-               <button type="button" ng-click="askQuestion()" class="btn btn-primary btn-block" >募集者に問う</button>
+               <button type="button" data-toggle="modal" data-target="#chatModal" class="btn btn-primary btn-block" >募集者に問う</button>
             </div>
          </div>
-         <div class="col-md-4 col-md-offset-4">
+         <div class="col-md-4 col-md-offset-4" ng-if="apply.status==='inProgress'">
             <div class="form-group">
                <span style="color:red">与陌生人接触时，注意保护自己</span>
                <button type="button" ng-click="applyJob()" class="btn btn-primary btn-block" >応募</button>
             </div>
          </div>
+         <div class="col-md-4 col-md-offset-4" ng-if="apply.status==='succeed'">
+         <div class="form-group">
+            <button type="button" data-toggle="modal" data-target="#commentModal" class="btn btn-primary btn-block" >comment</button>
+         </div>
+      </div>
       </div>
       <div class="col-md-8 col-md-offset-2" ng-if="applyType==='no-login'">
          <div class="col-md-4">
@@ -179,8 +184,8 @@
             <div class="form-group">
                応募するには必要な認証
                <br>
-              <input type="checkbox" ng-model="apply.personAuth">身元認証
-              <input type="checkbox" ng-model="apply.ability">日本語能力認証<br>
+              <input type="checkbox" ng-model="apply.personAuth" disabled>身元認証
+              <input type="checkbox" ng-model="apply.ability" disabled>日本語能力認証<br>
               <a href="#/login">認証手続きはこちら</a>
             </div>
          </div>
@@ -189,27 +194,54 @@
 </div>
 <div style="position:fixed; top: 200px; left: 50%; margin-left: 580px; width: 40px; height: 40px;" >
    <a href="" ng-click="goBack()"><i class="icon-reply icon-2x"></i></a>
-   <a href="" data-toggle="modal" data-target="#chatModal"><i class="icon-comments icon-2x"></i></a>
+   <a href="" data-toggle="modal" data-target="#chatModal" ng-if="user.userType==='chinese'"><i class="icon-comments icon-2x"></i></a>
 </div>
 
 <div class="modal fade" id="chatModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              <h4 class="modal-title" id="myModalLabel">Chat to {{apply.ownerName}}:</h4>
-            </div>
-            <div class="modal-body">
-              <div class="form-group">
-                <textarea rows="4" ng-model="chatContent" style="width:100%" placeholder="全角5文字以上入力してください" />
-                </textarea>                
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" ng-click="submitChat()">Submit</button>
-              </div>
-            </div>
-          </div>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Chat to {{apply.ownerName}}:</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <textarea rows="4" ng-model="chatContent" style="width:100%" placeholder="全角5文字以上入力してください" />
+          </textarea>                
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" ng-click="submitChat()">Submit</button>
         </div>
       </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="commentModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+   <div class="modal-dialog" role="document">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Enter your comment:</h4>
+         </div>
+         <div class="modal-body">
+            <div class="form-group">
+               <span style="color:red">评论</span>
+               <input type="radio" ng-model="comment.type" value="good">好評
+               <input type="radio" ng-model="comment.type" value="noBad">還行
+               <input type="radio" ng-model="comment.type" value="bad">差評
+            </div>
+            
+            <div class="form-group">
+               <textarea rows="4" ng-model="comment.content" style="width:100%" placeholder="全角5文字以上入力してください" />
+               </textarea>
+            </div>
+            <div class="modal-footer">
+               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+               <button type="button" class="btn btn-primary" ng-click="submitComment()">Submit</button>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
 

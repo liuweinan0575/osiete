@@ -2,86 +2,12 @@ var osieteControllers = angular.module('osieteControllers',
   ['jobListController','jobDetailController','loginController',
   'applicationController','questionController','indexController',
   'registerController', 'activeController', 'questionDetailController',
-  'applyController'])
+  'applyController', 'messageController', 'applicationDetailController','feedbackController'])
 
 osieteControllers.controller('HomepageCtrl', ['$scope', 
   function($scope){
     $scope.title="my homepage";
     window.location="#/jobs";
-  }]);
-osieteControllers.controller('MessageCtrl', ['$scope',
-  function($scope){
-    $('#otherInfoTab li a').click(function(e) {
-      e.preventDefault();//阻止a链接的跳转行为
-      $(this).tab('show');//显示当前选中的链接及关联的content
-    });
-
-    var messages = [
-      {
-        from: 'weinan',
-        to: 'biao',
-        msg:'nihao'
-      },
-      {
-        from: 'biao',
-        to: 'weinan',
-        msg:'hi'
-      },
-      {
-        from: 'weinan',
-        to: 'lina',
-        msg:'aini'
-      },
-      {
-        from: 'hong',
-        to: 'lina',
-        msg:'aini'
-      },
-      {
-        from: 'lina',
-        to: 'hong',
-        msg:'aini'
-      },
-      {
-        from: 'lina',
-        to: 'weinan',
-        msg:'hehe'
-      },
-      {
-        from: 'biao',
-        to: 'weinan',
-        msg:'hehe'
-      },
-      {
-        from: 'biao',
-        to: 'weinan',
-        msg:'momoda'
-      }
-    ]
-
-    $scope.messages =  _.groupBy(messages, function(message){ 
-      if (message.from === 'weinan' || message.to === 'weinan') {
-        return message.from === 'weinan' ? message.to : message.from
-      }  
-    });
-    delete $scope.messages.undefined
-    
-    $scope.clickTab = function(key){
-      console.log(key);
-      $scope.selectUser = key
-      $scope.data = $scope.messages[key];
-    }
-
-    $scope.msgReply = function(){
-      var newMsg = {
-        from:'weinan',
-        to:$scope.selectUser,
-        msg:$scope.msg
-      }
-      $scope.msg='';
-      $scope.data.push(newMsg);
-    }
-
   }]);
 osieteControllers.controller('ReadmeCtrl', ['$scope',
   function($scope){
@@ -130,20 +56,68 @@ osieteControllers.controller('RecruitmentDetailCtrl', ['$scope',
     
   }]);
 
-osieteControllers.controller('ApplicationDetailCtrl', ['$scope', 
-  function($scope){
-    
-  }]);
-
-osieteControllers.controller('FeedbacksCtrl', ['$scope', 'AjaxService',
-  function($scope, AjaxService){
-
-     AjaxService.loadFeedbacks('Weinan', function(data, status, headers, config) {     
-        $scope.feedbacks = data; 
+osieteControllers.controller('BidderCtrl', ['$scope', 'AjaxService', '$routeParams',
+  function($scope, AjaxService, $routeParams){
+    console.log($routeParams)
+    AjaxService.findUserById($routeParams.bidderId, function(data, status, headers, config) {     
+        $scope.bidder = data[0];
+        console.log($scope.bidder)
+        AjaxService.findCommentsByUserId($scope.bidder.id, function(data, status, headers, config) {     
+        $scope.types = _.countBy(data, function(comment) {
+          return comment.type;
+        });
       }, function() {
       });
-    
+      }, function() {
+      });
+
+    AjaxService.loadJobListById($routeParams.applyId, function(data, status, headers, config) {
+      // $scope.apply = _.filter(data, { id: $routeParams.jobId })[0];
+      $scope.apply = data[0];
+      console.log($scope.apply)
+    }, function() {
+    });
+
+    $scope.winJob = function(){
+      if (!window.confirm("单击“确定”继续。单击“取消”停止。")) {
+        return;
+      }
+      var body = {
+        jobId: $scope.apply.id,
+        bidderId: $scope.bidder.id
+      };
+      AjaxService.winJob(body, function(data, status, headers, config) { 
+        console.log(data)   
+        $scope.createNgToast('success','win this job!');
+        $scope.apply.status = 'succeed';
+      }, function() {
+      });
+      
+    };
+
+    $scope.submitComment = function(){
+      var body = {
+        id:uuid(),
+        date:new Date(),
+        dateString:moment(new Date()).format('YYYY-MM-DD'),
+        fromUserId: $scope.user.id,
+        toUserId: $scope.apply.ownerId,
+        type: $scope.comment.type,
+        content: $scope.comment.content,
+        jobId: $scope.apply.id
+      }
+      AjaxService.addComment(body, function(data, status, headers, config) {     
+        $scope.createNgToast('success','comment successfully!');
+      }, function() {
+      });
+      
+    }
+      
+
   }]);
+
+
+
 
 
 

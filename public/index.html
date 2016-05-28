@@ -15,22 +15,22 @@
   </head>
   <body >
     <toast></toast>
-    <div class="container">
-      <nav class="navbar navbar-default" role="navigation">
-        
+    <nav class="navbar navbar-default">
+      <div class="container">
         <div class="navbar-header">
           <a class="navbar-brand" href="#/"><i class="icon-comments icon-1x"></i>教えて</a>
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
         </div>
-        <ul class="nav navbar-nav" ng-repeat="menu in menuList">
-          <li><a href={{menu.link}}>{{menu.name}}</a></li>
-        </ul>
-        <div class="pull-right">
-          <ul class="nav navbar-nav" ng-if="isLogined==='unlogined'">
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav" ng-repeat="menu in menuList">
+            <li><a href={{menu.link}}>{{menu.name}}</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right" ng-if="isLogined==='unlogined'">
             <li><a href="#/login">ログイン</a></li>
             <li><a href="#/register">登録</a></li>
             <li><a href="#/help">ヘルプ</a></li>
           </ul>
-          <ul class="nav navbar-nav" ng-if="isLogined!=='unlogined'">
+          <ul class="nav navbar-nav navbar-right" ng-if="isLogined!=='unlogined'">
             <li class="dropdown">
               <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Publiser: {{name}} <span class="caret"></span></a>
               <ul class="dropdown-menu">
@@ -42,16 +42,13 @@
             <li><a href="#/help">ヘルプ</a></li>
           </ul>
         </div>
-        
-      </nav>
-    </div>
-    
+      </div>
+    </nav>
+       
     <div class="container">
       <div class="row pull-right">
         <a href="" data-toggle="modal" data-target="#feedbackModal">feedback</a>
       </div>
-    </div>
-    <div class="container">
       <div class="modal fade" id="feedbackModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
@@ -62,7 +59,7 @@
             <div class="modal-body">
               <div class="form-group">
                 <textarea rows="4" ng-model="fbContent" style="width:100%" placeholder="全角5文字以上入力してください" />
-                </textarea>                
+                </textarea>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -73,42 +70,43 @@
         </div>
       </div>
     </div>
-      
-      <div class="view-container">
-        
-        <div ng-view class="view-frame"></div>
-      </div>
-      
-      <script src="library/jquery/jquery-2.1.4.js"></script>
-      <script src="library/underscore/underscore.js"></script>
-      <script src="library/bootstrap/bootstrap.js"></script>
-      <script src="library/moment/moment.js"></script>
-      
-      <script src="library/angular/angular-1.4.8.js"></script>
-      <script src="library/angular/angular-route.js"></script>
-      <script src="library/angular/angular-resource.js"></script>
-      <script src="library/angular/angular-animate-1.4.8.js"></script>
-      <script src="library/angular/angular-sanitize.js"></script>
-      <script src="library/sharejs/js/jquery.share.min.js"></script>
-      <script src="library/ngToast/ngToast.min.js"></script>
-      <script src="library/ngFile/ng-file-upload.min.js"></script>
-      <script src="library/ngFile/ng-file-upload-shim.min.js"></script>
-      <script src="library/md5/md5.min.js"></script>
-      
-      <script src="library/zabuto/zabuto_calendar.min.js"></script>
-      <script src="js/app.js"></script>
-      <script src="js/controller.js"></script>
-      <script src="js/services.js"></script>
-      <script src="js/util.js"></script>
-      <script src="js/controllers/jobDetailController.js"></script>
-      <script src="js/controllers/jobListController.js"></script>
-      <script src="js/controllers/loginController.js"></script>
-      <script src="js/controllers/applicationController.js"></script>
-      <script src="js/controllers/questionController.js"></script>
-      <script src="js/controllers/indexController.js"></script>
-      <script src="js/controllers/registerController.js"></script>
-      <script src="js/controllers/activeController.js"></script>
-      <script src="js/controllers/questionDetailController.js"></script>
-      <script src="js/controllers/applyController.js"></script>
-    </body>
-  </html>
+    <div class="view-container">     
+      <div ng-view class="view-frame"></div>
+    </div>
+    
+    <script src="library/jquery/jquery-2.1.4.js"></script>
+    <script src="library/underscore/underscore.js"></script>
+    <script src="library/bootstrap/bootstrap.js"></script>
+    <script src="library/moment/moment.js"></script>
+    
+    <script src="library/angular/angular-1.4.8.js"></script>
+    <script src="library/angular/angular-route.js"></script>
+    <script src="library/angular/angular-resource.js"></script>
+    <script src="library/angular/angular-animate-1.4.8.js"></script>
+    <script src="library/angular/angular-sanitize.js"></script>
+    <script src="library/sharejs/js/jquery.share.min.js"></script>
+    <script src="library/ngToast/ngToast.min.js"></script>
+    <script src="library/ngFile/ng-file-upload.min.js"></script>
+    <script src="library/ngFile/ng-file-upload-shim.min.js"></script>
+    <script src="library/md5/md5.min.js"></script>
+    
+    <script src="library/zabuto/zabuto_calendar.min.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/controller.js"></script>
+    <script src="js/services.js"></script>
+    <script src="js/util.js"></script>
+    <script src="js/controllers/jobDetailController.js"></script>
+    <script src="js/controllers/jobListController.js"></script>
+    <script src="js/controllers/loginController.js"></script>
+    <script src="js/controllers/applicationController.js"></script>
+    <script src="js/controllers/questionController.js"></script>
+    <script src="js/controllers/indexController.js"></script>
+    <script src="js/controllers/registerController.js"></script>
+    <script src="js/controllers/activeController.js"></script>
+    <script src="js/controllers/questionDetailController.js"></script>
+    <script src="js/controllers/applyController.js"></script>
+    <script src="js/controllers/messageController.js"></script>
+    <script src="js/controllers/applicationDetailController.js"></script>
+    <script src="js/controllers/feedbackController.js"></script>
+  </body>
+</html>

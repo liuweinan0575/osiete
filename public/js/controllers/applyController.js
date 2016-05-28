@@ -27,7 +27,8 @@ angular.module('applyController', [])
       ownerAccount:$scope.user.account,
       winnerId:null,
       bidderIds:[],
-      period:''
+      period:'',
+      status:'inProgress'
     }
 
     $scope.ch2ja = function(){
@@ -68,12 +69,7 @@ angular.module('applyController', [])
       console.log(apply);
       AjaxService.addJobs(apply, function(data, status, headers, config) {
         console.log(data);
-        ngToast.create({
-          className: 'success',
-          content: 'Add jobs sucessfully',
-          dismissButton: true,
-          dismissOnTimeout: true
-        });
+        $scope.createNgToast('success','Add jobs sucessfully');
       }, function() {
       });
     }

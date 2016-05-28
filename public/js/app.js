@@ -51,11 +51,11 @@ osieteApp.config(['$routeProvider', function($routeProvider){
         controller: 'PersonAuthCtrl'
       }).
       when('/recruitment', {
-        templateUrl:'partials/recruitment.html',
-        controller: 'RecruitmentCtrl'
+        templateUrl:'partials/application.html',
+        controller: 'ApplicationCtrl'
       }).
       when('/recruitment/:id', {
-        templateUrl:'partials/recruitmentDetail.html',
+        templateUrl:'partials/recruitment-detail.html',
         controller: 'RecruitmentDetailCtrl'
       }).
       when('/application', {
@@ -63,7 +63,7 @@ osieteApp.config(['$routeProvider', function($routeProvider){
         controller: 'ApplicationCtrl'
       }).
       when('/application/:id', {
-        templateUrl:'partials/applicationDetail.html',
+        templateUrl:'partials/application-detail.html',
         controller: 'ApplicationDetailCtrl'
       }).
       when('/question', {
@@ -97,6 +97,10 @@ osieteApp.config(['$routeProvider', function($routeProvider){
       when('/comments', {
         templateUrl:'partials/comments.html',
         controller: 'CommentsCtrl'
+      }).
+      when('/bidder/:bidderId&:applyId', {
+        templateUrl:'partials/bidder.html',
+        controller: 'BidderCtrl'
       }).
       when('/feedbacks', {
         templateUrl:'partials/feedbacks.html',

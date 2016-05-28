@@ -1,0 +1,89 @@
+<div class="container">
+  <form class="form-horizontal" role="form">
+    <div class="col-md-8 col-md-offset-2" style="text-align:center">
+      <div class="form-group">
+        <label class="control-label" style="font-size:24px">
+          応募者情報
+        </label>
+      </div>
+    </div>
+    <div class="col-md-8 col-md-offset-1" style="text-align:center">
+      <div class="form-group">
+        <label class="col-md-4 control-label">氏名</label>
+        <div class="col-md-8">
+          <input type="text" ng-model="bidder.name" class="form-control" placeholder="请输入名字" disabled>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-md-4 control-label">電話番号</label>
+        <div class="col-md-8">
+          <input type="text" ng-model="bidder.tel" class="form-control" placeholder="请输入名字" disabled>
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label class="col-md-4 control-label">メール</label>
+        <div class="col-md-8">
+          <input type="text" ng-model="bidder.account" class="form-control" placeholder="请输入名字" disabled>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">身元認証
+    </div>
+    <div class="col-md-8 col-md-offset-1" style="text-align:center">
+      <div class="form-group">
+        <label for="meetTime" class="col-md-4 control-label">日本語能力</label>
+        <div class="col-md-8">
+          <input type="text" ng-model="bidder.jpLevel" class="form-control" placeholder="feichanghao" disabled>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">能力認証
+    </div>
+    <div class="col-md-8 col-md-offset-2" style="text-align:center">
+      <div class="panel panel-default" style="height:120px">
+        <div class="panel-heading">
+          皆からの評判
+        </div>
+        <div class="panel-body">
+          <div class="row" >
+            <div class="col-md-4">
+              <div class="form-group">
+                好評：{{types.good || 0}}
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                還行：{{types.notBad || 0}}
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                差評：{{types.bad || 0}}
+              </div>
+            </div>
+            <div class="col-md-4 col-md-offset-4">
+              <div class="form-group">
+                <a href="#/comments" >詳しくはこちら</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-8 col-md-offset-2">
+         <div class="col-md-4">
+            <div class="form-group">
+               <span style="color:red">何か不明な所あるなら</span>
+               <button type="button" data-toggle="modal" data-target="#chatModal" class="btn btn-primary btn-block" >募集者に問う</button>
+            </div>
+         </div>
+         <div class="col-md-4 col-md-offset-4" ng-if="apply.status==='inProgress'">
+            <div class="form-group">
+               <span style="color:red">与陌生人接触时，注意保护自己</span>
+               <button type="button" ng-click="winJob()" class="btn btn-primary btn-block" >当選させる</button>
+            </div>
+         </div>
+      </div>
+  </form>
+</div>
