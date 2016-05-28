@@ -1,5 +1,8 @@
 <div class="container">
    <form class="form-horizontal" role="form">
+      <div class="col-md-12">
+         <a href="" ng-click="goBack()">戻す</a>
+      </div>
       <div class="col-md-8 col-md-offset-2">
          <ul class="nav nav-pills" id="otherInfoTab">
             <li class="active"><a href="#time_line">時間</a></li>
@@ -7,7 +10,6 @@
             <li><a href="#sms_send">募集内容</a></li>
             <li><a href="#order_path">募集者情報</a></li>
          </ul>
-         
          <div class="tab-content">
             <div class="tab-pane active" id="time_line">
                <div class="panel panel-default" style="height:350px">
@@ -79,15 +81,41 @@
                                  <div style="text-align:center">約{{apply.moneyJa}}円</div>
                               </div>
                            </div>
+                           <div class="form-group">
+                             応募者には必要な認証
+                             <br>
+                             <input type="checkbox" ng-model="apply.personAuth">身元認証
+                             <input type="checkbox" ng-model="apply.ability">日本語能力認証<br>
+                           </div>
                         </div>
                      </div>
                   </div>
                </div>
             </div>
             <div class="tab-pane" id="order_path">
-               <div class="panel panel-default" style="height:350px">
+               <div class="panel panel-default" style="height:350px;overflow-y:scroll">
                   <div class="panel-body">
-                     <div class="row" >
+                     <div class="list-group" ng-if="apply.status==='inProgress'">
+                        <div class="row">
+                           <div class="col-md-6">
+                           名前
+                           </div>
+                           <div class="col-md-6">
+                              認証状況
+                           </div>
+                        </div>
+                        <a href="#/bidder/{{bidder.id}}" ng-repeat="bidder in bidders" class="list-group-item">
+                           <div class="row">
+                              <div class="col-md-6">
+                              {{bidder.name}}
+                              </div>
+                              <div class="col-md-6">
+                              身份认证<span ng-if="bidder.personAuth" class="icon-check"></span><span ng-if="!bidder.personAuth" class="icon-check-empty"></span>职业认证<span ng-if="bidder.ability" class="icon-check"></span><span ng-if="!bidder.ability" class="icon-check-empty"></span>
+                              </div>
+                           </div>
+                        </a>    
+                     </div>
+                     <div class="row" ng-if="apply.status==='succeed'">
                         <div class="col-md-10">
                            <div class="form-group">
                               <label class="col-md-4 control-label">氏名</label>
@@ -153,44 +181,35 @@
          </div>
          
       </div>
-      <div class="col-md-8 col-md-offset-2" ng-if="applyType==='success'">
+      <div class="col-md-8 col-md-offset-2" ng-if="apply.status==='inProgress'">
+         <div class="col-md-4 col-md-offset-4">
+            <div class="form-group">
+               <span style="color:red">确认要撤销吗</span>
+               <button type="button" ng-click="failJob()" class="btn btn-primary btn-block" >終了させる</button>
+            </div>
+         </div>
+      </div>
+
+      <div class="col-md-8 col-md-offset-2" ng-if="apply.status==='succeed'">
          <div class="col-md-4">
             <div class="form-group">
                <span style="color:red">何か不明な所あるなら</span>
                <button type="button" data-toggle="modal" data-target="#chatModal" class="btn btn-primary btn-block" >募集者に問う</button>
             </div>
          </div>
-         <div class="col-md-4 col-md-offset-4" ng-if="job.status==='inProgress'">
+      </div>
+      <div class="col-md-8 col-md-offset-2" ng-if="apply.status==='deleted'">
+         <div class="col-md-4 col-md-offset-4">
             <div class="form-group">
-               <span style="color:red">与陌生人接触时，注意保护自己</span>
-               <button type="button" ng-click="applyJob()" class="btn btn-primary btn-block" >応募</button>
+               <span style="color:red">当前不支持删除结束的申请</span>
+               <button type="button" ng-click="deleteJob()" class="btn btn-primary btn-block" >削除</button>
             </div>
          </div>
       </div>
-      <div class="col-md-8 col-md-offset-2" ng-if="applyType==='no-login'">
-         <div class="col-md-4">
-            <div class="form-group">
-               応募する前に<a href="#/login">ログイン</a> してください
-            </div>
-         </div>
-      </div>
-      <div class="col-md-8 col-md-offset-2" ng-if="applyType==='failure'">
-         <div class="col-md-4">
-            <div class="form-group">
-               応募するには必要な認証
-               <br>
-              <input type="checkbox" ng-model="apply.personAuth" disabled>身元認証
-              <input type="checkbox" ng-model="apply.ability" disabled>日本語能力認証<br>
-              <a href="#/login">認証手続きはこちら</a>
-            </div>
-         </div>
-      </div>     
+          
    </form>
 </div>
-<div style="position:fixed; top: 200px; left: 50%; margin-left: 580px; width: 40px; height: 40px;" >
-   <a href="" ng-click="goBack()"><i class="icon-reply icon-2x"></i></a>
-   <a href="" data-toggle="modal" data-target="#chatModal" ng-if="user.userType==='chinese'"><i class="icon-comments icon-2x"></i></a>
-</div>
+
 
 <div class="modal fade" id="chatModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
@@ -212,4 +231,5 @@
           </div>
         </div>
       </div>
+
 

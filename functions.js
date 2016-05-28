@@ -9,7 +9,12 @@ ngToast.create({
           dismissButton: true,
           dismissOnTimeout: true
         }); 
+$scope.createNgToast('success','add feedback successly');
 
 console.log();
+dateString:moment(new Date()).format('YYYY-MM-DD'),
+
+<li ng-if="job.status==='inProgress'"><a href="#bidders">応募者</a></li>
+<li ng-if="job.status==='succeed'"><a href="#winnder">当選者</a></li>
 
 

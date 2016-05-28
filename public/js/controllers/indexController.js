@@ -68,8 +68,10 @@ angular.module('indexController', [])
       $scope.feedback = {
         id:uuid(),
         content: $scope.fbContent,
-        user: 'Weinan',
-        date: new Date
+        userId: $scope.user.id,
+        userName: $scope.user.name,
+        date: new Date,
+        dateString: moment(new Date()).format('YYYY-MM-DD')
       }
       console.log($scope.feedback);
 

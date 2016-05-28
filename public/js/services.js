@@ -164,10 +164,21 @@ osieteServices
 		loadJobList: function(id, success, error) {
 			$http({method: 'get', url:'ajax/jobs'}).success(success).error(error);
 		},
-		loadJobListByUserId: function(userId, success, error) {
-			$http({method: 'get', url:'ajax/jobs/'+userId}).success(success).error(error);
+		loadJobListById: function(id, success, error) {
+			$http({method: 'get', url:'ajax/jobs/'+id}).success(success).error(error);
 		},
-		
+		loadJobListByUserId: function(userId, success, error) {
+			$http({method: 'get', url:'ajax/jobs/byUserId/'+userId}).success(success).error(error);
+		},
+		loadJobListByBidderId: function(userId, success, error) {
+			$http({method: 'get', url:'ajax/jobs/byBidderId/'+userId}).success(success).error(error);
+		},
+		applyJob: function(body, success, error) {
+			$http.post('ajax/jobs/apply', body).success(success).error(error);
+		},	
+		failJob: function(body, success, error) {
+			$http.post('ajax/jobs/fail', body).success(success).error(error);
+		},	
 		addJobs: function(body, success, error) {
 			$http.post('ajax/jobs/add', body).success(success).error(error);
 		},
@@ -177,11 +188,20 @@ osieteServices
 		activeUser: function(id, success, error) {
 			$http({method: 'get', url:'ajax/users/activeUser/'+id}).success(success).error(error);
 		},
+		abilityUser: function(id, success, error) {
+			$http({method: 'get', url:'ajax/users/ability/'+id}).success(success).error(error);
+		},
+		personAuthUser: function(id, success, error) {
+			$http({method: 'get', url:'ajax/users/personAuth/'+id}).success(success).error(error);
+		},
 		modifyUser: function(body, success, error) {
 			$http.post('ajax/users/modify', body).success(success).error(error);
 		},
 		userLogin: function(body, success, error) {
 			$http.post('ajax/users/login', body).success(success).error(error);
+		},
+		loadUserList: function(id, success, error) {
+			$http({method: 'get', url:'ajax/users'}).success(success).error(error);
 		},
 		findUserById: function(id, success, error) {
 			$http({method: 'get', url:'ajax/users/findUserById/'+id}).success(success).error(error);
@@ -195,10 +215,18 @@ osieteServices
 		addFeedback: function(body, success, error) {
 			$http.post('ajax/feedbacks/add', body).success(success).error(error);
 		},
+		addMsg: function(body, success, error) {
+			$http.post('ajax/msg/add', body).success(success).error(error);
+		},
+		loadMsgByUserId: function(userId, success, error) {
+			$http({method: 'get', url:'ajax/msg/'+userId}).success(success).error(error);
+		},
 		addFiles: function(body, success, error) {
 			$http.post('ajax/files/add', body).success(success).error(error);
+		},
+		authSystem: function(body, success, error) {
+			$http.post('ajax/auth', body).success(success).error(error);
 		}
-
 	}
 })
 ;

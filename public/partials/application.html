@@ -1,48 +1,47 @@
 <div class="container">
 	<form class="form-horizontal" role="form">
 		<div class="col-md-12">
-			<a href="#/question">戻す</a>
-		</div>
-		<div class="col-md-12">
 			<div id="my-calendar"></div>
 		</div>
-		<br>
+		<div class="col-md-12">
+			<hr>
+		</div>		
 		<div class="row" >
 			<div class="col-md-6">
 				<label>
-					{{strings.meetTimeAndPlace}}
+					待ち合わせ時間と場所
 				</label>
 			</div>
-			<div class="col-md-2">
+			<div class="col-md-3">
 				<label>
 					仕事内容
 				</label>
 			</div>
-			<div class="col-md-4">
+			<div class="col-md-3">
 				<label>
-					{{strings.authCondition}}
+					募集状態
 				</label>
 			</div>
 		</div>
 		<div class="list-group" >
-			<a href="#/jobs/{{job.id}}" ng-repeat="job in jobs" class="list-group-item">
+			<a href="#/{{partUrl}}/{{job.id}}" ng-repeat="job in jobs" class="list-group-item">
 				<div class="row">
 					<div class="col-md-6">
 						<div class="col-md-4">
-							{{job.day}}
+							{{job.dateString}}
 						</div>
 						<div class="col-md-2">
-							{{job.time}}
+							{{job.timeString}}
 						</div>
 						<div class="col-md-4">
-							{{job.place}}
+							{{job.address}}
 						</div>
 					</div>
-					<div class="col-md-2">
-						{{job.course}}元
+					<div class="col-md-3">
+						{{job.course}}
 					</div>
-					<div class="col-md-4">
-						{{strings.personAuth}}<span ng-if="job.personAuth" class="icon-check"></span><span ng-if="!job.personAuth" class="icon-check-empty"></span>{{strings.careerAuth}}<span ng-if="job.ability" class="icon-check"></span><span ng-if="!job.ability" class="icon-check-empty"></span>
+					<div class="col-md-3">
+						{{job.status}}
 					</div>
 				</div>
 			</a>

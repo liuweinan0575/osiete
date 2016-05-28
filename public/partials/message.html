@@ -1,21 +1,28 @@
 <div class="container">
 	<form class="form-horizontal" role="form">
 		<div class="col-md-8 col-md-offset-2">
-			<div class="row" >
-				<div class ="col-md-4">
+			<div class="row">
+				<div class ="col-md-4" ng-if="!hasContact">
+					no contact
+				</div>
+				<div class ="col-md-4" ng-if="hasContact">
 					<ul class="nav nav-pills nav-stacked">
 						<li ng-repeat= "(key, data) in messages">
-							<button ng-click="clickTab(key)" class="{{selectUser===key?'btn btn-primary btn-block':'btn btn-default btn-block'}}">{{key}}</button>
-							
+							<button ng-click="clickTab(key)" class="{{selectUser===key?'btn btn-primary btn-block':'btn btn-default btn-block'}}">{{key}}</button>							
 					</ul>
 				</div>
 				<div class ="col-md-8">
-					<div class="panel panel-default" style="height:200px">
+					<div class="panel panel-default" style="height:400px;overflow-y:scroll">
 						<div class="panel-body">
-							{{data}}
+							<div class="col-md-12" ng-repeat="msg in data">
+								<div class="form-group">
+									<span>{{msg.fromUserId===user.id?'I ':msg.fromUserName+'さん '}}</span><span>{{msg.dateString}}</span>
+									<pre>{{msg.msg}}</pre>
+								</div>
+							</div>
 						</div>
 					</div>
-					<textarea rows="3" ng-model="msg" style="width:100%" placeholder="全角5文字以上入力してください" />
+					<textarea rows="5" ng-model="replyContent" style="width:100%" placeholder="全角5文字以上入力してください" />
 					<button ng-click="msgReply()" class="btn btn-primary"+" btn-block">回复</button>					
 				</div>
 			</div>

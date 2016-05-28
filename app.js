@@ -121,6 +121,7 @@ anotherRouter.post('/questions/add', function(req, res){
     res.json(result);
   });
 });
+
 anotherRouter.get('/questions/viewCountPlus/:questionId', function(req, res){
   db.collection('questions').findAndModify({id: req.params.questionId}, [], {$inc:{viewCount:1}}, {new: true, upset: true}, function(err, result){  
     if (err) throw err;
@@ -155,8 +156,34 @@ anotherRouter.post('/jobs/add', function(req, res){
     res.json(result);
   });
 });
-anotherRouter.get('/jobs/:userId', function(req, res){  
-  db.collection('jobs').find({owner:req.params.userId}).toArray(function(err, result) {
+anotherRouter.post('/jobs/apply', function(req, res){ 
+  var body = req.body; 
+  db.collection('jobs').findAndModify({id: body.jobId}, [], {$push:{bidderIds:body.applyUserId}}, {new: false, upset: true}, function(err, result){  
+    if (err) throw err;
+    res.json(result);
+  });
+});
+anotherRouter.post('/jobs/fail', function(req, res){ 
+  var body = req.body; 
+  db.collection('jobs').findAndModify({id: body.jobId}, [], {$set:{status:'deleted'}}, {new: false, upset: true}, function(err, result){  
+    if (err) throw err;
+    res.json(result);
+  });
+});
+anotherRouter.get('/jobs/:id', function(req, res){  
+  db.collection('jobs').find({id:req.params.id}).toArray(function(err, result) {
+    if (err) throw err;
+    res.json(result);
+  });
+});
+anotherRouter.get('/jobs/byUserId/:userId', function(req, res){ 
+  db.collection('jobs').find({ownerId:req.params.userId}).toArray(function(err, result) {
+    if (err) throw err;
+    res.json(result);
+  });
+});
+anotherRouter.get('/jobs/byBidderId/:userId', function(req, res){ 
+  db.collection('jobs').find({bidderIds:req.params.userId}).toArray(function(err, result) {
     if (err) throw err;
     res.json(result);
   });
@@ -187,6 +214,18 @@ anotherRouter.post('/users/add', function(req, res){
 });
 anotherRouter.get('/users/activeUser/:id', function(req, res){  
   db.collection('users').find({id: req.params.id}).toArray(function(err, result) {
+    if (err) throw err;
+    res.json(result);
+  });
+});
+anotherRouter.get('/users/ability/:id', function(req, res){ 
+  db.collection('users').findAndModify({id:req.params.id}, [], {$set:{ability:true}}, {new: false, upset: true}, function(err, result){  
+    if (err) throw err;
+    res.json(result);
+  });
+});
+anotherRouter.get('/users/personAuth/:id', function(req, res){ 
+  db.collection('users').findAndModify({id:req.params.id}, [], {$set:{personAuth:true}}, {new: false, upset: true}, function(err, result){  
     if (err) throw err;
     res.json(result);
   });
@@ -223,8 +262,16 @@ anotherRouter.post('/users/login', function(req, res){
   });
   
 });
-anotherRouter.get('/users/findUserById/:id', function(req, res){  
-  db.collection('users').find({id: req.params.id}).toArray(function(err, result) {
+anotherRouter.get('/users/findUserById/:id', function(req, res){
+  var ids = req.params.id.split(',');
+  db.collection('users').find({id: {$in:ids}}).toArray(function(err, result) {
+    if (err) throw err;
+    res.json(result);
+  });
+});
+
+anotherRouter.get('/users', function(req, res){
+  db.collection('users').find().toArray(function(err, result) {
     if (err) throw err;
     res.json(result);
   });
@@ -250,13 +297,36 @@ anotherRouter.get('/feedbacks', function(req, res){
   });
 });
 
+anotherRouter.post('/msg/add', function(req, res){ 
+  db.collection('messages').insert(req.body, {}, function(err, result){  
+    if (err) throw err;
+    res.json(result);
+  });
+});
+
+anotherRouter.get('/msg/:userId', function(req, res){
+  var userId = req.params.userId;  
+  db.collection('messages').find({ "$or" : [ { "fromUserId" : userId} , { "toUserId" : 
+userId}]}).toArray(function(err, result) {
+    if (err) throw err;
+    res.json(result);
+  });
+});
+
 anotherRouter.post('/files/add', function(req, res){   
     console.log(req.files);
-
     res.json({status:'ok'})
 });
 
-
+anotherRouter.post('/auth', function(req, res){ 
+  var result = {};
+  if (req.body.pwd === 'test123') {
+    result.ok = 1;
+  } else {
+    result.ok = 0;
+  }
+  res.json(result);
+});
 
 /// 5. call served below /api
 app.use('/api', router);
