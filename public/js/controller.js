@@ -79,7 +79,7 @@ osieteControllers.controller('BidderCtrl', ['$scope', 'AjaxService', '$routePara
     });
 
     $scope.winJob = function(){
-      if (!window.confirm("å•å‡»â€œç¡®å®šâ€ç»§ç»­ã€‚å•å‡»â€œå–æ¶ˆâ€åœæ­¢ã€‚")) {
+      if (!window.confirm("µ¥»÷¡°È·¶¨¡±¼ÌĞø¡£µ¥»÷¡°È¡Ïû¡±Í£Ö¹¡£")) {
         return;
       }
       var body = {
