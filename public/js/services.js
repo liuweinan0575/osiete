@@ -120,6 +120,9 @@ osieteServices
 		findUserById: function(id, success, error) {
 			$http({method: 'get', url:'ajax/users/findUserById/'+id}).success(success).error(error);
 		},
+		findUserByAccount: function(account, success, error) {
+			$http({method: 'get', url:'ajax/users/findUserByAccount/'+account}).success(success).error(error);
+		},
 		addComment: function(body, success, error) {
 			$http.post('ajax/comments/add', body).success(success).error(error);
 		},

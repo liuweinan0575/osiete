@@ -4,8 +4,11 @@
     	<div class="col-md-6">
     		<div class="form-group">
           <label class="col-md-4 control-label">待ち合わせ時間</label>
-          <div class="col-md-8">
-            <input type="date" ng-model="condition.date" class="form-control" placeholder="请输入时间" required>
+          <div class="col-md-4">
+            <input type="date" ng-model="condition.fromDate" class="form-control" placeholder="请输入时间" >
+          </div>
+          <div class="col-md-4">
+            <input type="date" ng-model="condition.toDate" class="form-control" placeholder="请输入时间" >
           </div>
         </div>
       </div>
@@ -24,9 +27,6 @@
         <input type="checkbox" ng-model="condition.personAuth">
     		募集者に身元認証が必要
         </input>
-        <input type="checkbox" ng-model="condition.ability">
-        ability認証
-        </input>
     	</div>
     </div>
     <div class="row">
@@ -37,9 +37,6 @@
             <div class="row">
               <div class="col-md-4">
                 <select ng-model="condition.distict" class="form-control" ng-options="x.id as x.name for x in disticts"></select>                     
-              </div>
-              <div class="col-md-8">
-                <input type="text" ng-model="condition.address" class="form-control" placeholder="请输入名字">                   
               </div>
             </div>
           </div>
@@ -60,7 +57,7 @@
     	</div>
     	<div class="col-md-2">
         <button type="button" ng-click="search()" class="btn btn-primary">検索</button>	
-        <button type="button" ng-click="reset()" class="btn btn-primary">reset</button>	
+        <button type="button" ng-click="reset()" class="btn btn-primary">リセット</button>	
     	</div>
       <div class="col-md-2">
            
@@ -107,13 +104,13 @@
           </div>
         </div>
         <div class="col-md-2">
-          {{job.course}}元
+          {{job.course}}
         </div>
         <div class="col-md-2">
           {{job.moneyCh}}元
         </div>
         <div class="col-md-2">
-          身份认证<span ng-if="job.personAuth" class="icon-check"></span><span ng-if="!job.personAuth" class="icon-check-empty"></span>职业认证<span ng-if="job.ability" class="icon-check"></span><span ng-if="!job.ability" class="icon-check-empty"></span>
+          身元認証<span ng-if="job.personAuth" class="icon-check"></span><span ng-if="!job.personAuth" class="icon-check-empty"></span>
         </div>
       </div>
     </a>    

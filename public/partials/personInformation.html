@@ -9,23 +9,23 @@
                 <div class="form-group">
                   <label class="col-md-4 control-label">氏名</label>
                   <div class="col-md-8">
-                    <input type="text" ng-model="user.name" class="form-control" placeholder="请输入名字">
+                    <input type="text" ng-model="user.name" class="form-control">
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="col-md-4 control-label">電話番号</label>
                   <div class="col-md-8">
-                    <input type="text" ng-model="user.tel" class="form-control" placeholder="请输入名字">
+                    <input type="text" ng-model="user.tel" class="form-control">
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="col-md-4 control-label">メール</label>
                   <div class="col-md-8">
-                    <input type="text" ng-model="user.account" class="form-control" placeholder="请输入名字">
+                    <input type="text" ng-model="user.account" class="form-control" disabled>
                   </div>
                 </div>
-                <div class="form-group">
-                  <label for="meetTime" class="col-md-4 control-label">中国語能力</label>
+                <div class="form-group" ng-if="user.userType==='japanese'">
+                  <label class="col-md-4 control-label">中国語能力</label>
                   <div class="col-md-8">
                     <input type="radio" ng-model="user.level" value="1">単語だけ読めるほど
                     <br>
@@ -35,6 +35,14 @@
                     <br>
                     <input type="radio" ng-model="user.level" value="4">ぺらぺら喋れるほど
                     <br>
+                  </div>
+                </div>
+                <div class="form-group" ng-if="user.userType==='chinese'">
+                  <label class="col-md-4 control-label">中国語能力</label>
+                  <div class="col-md-8">
+                    <input type="text" ng-model="user.level[0]" class="form-control">
+                    <input type="text" ng-model="user.level[1]" class="form-control">
+                    <input type="text" ng-model="user.level[2]" class="form-control">
                   </div>
                 </div>
                 <div class="form-group">

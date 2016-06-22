@@ -39,7 +39,7 @@ angular.module('questionDetailController', [])
       var isValid = true;
       var error = [];      
       if (!$scope.content) {
-        error.push('Content cannot be empty!');
+        error.push(alertMsg.contentNotEmpty);
         isValid = false;
       }
       if (!isValid) {
@@ -53,12 +53,7 @@ angular.module('questionDetailController', [])
       }
       AjaxService.addResponse(newResponse, function(data, status, headers, config) {
         console.log(data)
-        ngToast.create({
-          className: 'success',
-          content: 'Add response successfully',
-          dismissButton: true,
-          dismissOnTimeout: true
-        }); 
+        $scope.createNgToast('success', alertMsg.addResponseSuccess);
         $scope.responses.push(newResponse);
       }, function() {
       });

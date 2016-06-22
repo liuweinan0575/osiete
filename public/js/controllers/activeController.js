@@ -5,38 +5,27 @@ angular.module('activeController', [])
     var userId = $routeParams.id;
     $scope.user = {};
     AjaxService.activeUser(userId, function(data, status, headers, config) {
-      if (data.length!==0) {
-      	$scope.user = data[0];
+      if (data.ok===1) {
+      	$scope.user = data.user;
       	delete $scope.user._id;
-		ngToast.create({
-			className: 'success',
-			content: 'active successfully!',
-			dismissButton: true,
-			dismissOnTimeout: true
-		});
-        } else {
-          ngToast.create({
-            className: 'success',
-            content: 'active failed! Please close this page',
-            dismissButton: true,
-            dismissOnTimeout: true
-          });
-        }
+        $scope.createNgToast('success', alertMsg.activeSuccess);
+        localStorage.setItem("user",JSON.stringify(user));
+      } else {
+        $scope.createNgToast('danger', alertMsg.activeFailed);
+        window.location="#/login";
+      }
     }, function() {
+      $scope.createNgToast('danger', 'url incorrect');
+      window.location="#/login";
     });
 
     $scope.finish = function(){
       AjaxService.modifyUser($scope.user, function(data, status, headers, config) {
         console.log(data)
         if (data.ok === 1) {
-          ngToast.create({
-            className: 'success',
-            content: 'Update user info successfully!',
-            dismissButton: true,
-            dismissOnTimeout: true
-          });
+          $scope.createNgToast('success', alertMsg.updateUserInfo);
+          window.location="#/login";
         }
-
       }, function() {
       }); 
     }

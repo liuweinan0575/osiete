@@ -13,24 +13,24 @@
           
         </div>
     		<div class="form-group">
-          <input type="email" class="form-control" id="email" placeholder="メールアドレス">
+          <input type="email" class="form-control" ng-model="account" placeholder="メールアドレス">
         </div>
         <div class="form-group">
           <label class="control-label">不正な利用を防ぐため認証を行います</label>
         </div>
         <div class="row">
           <div class="well" style="position:relative">
-            <span style="font-size:20px">197838</span>
+            <span style="font-size:20px">{{sixNumber}}</span>
             <div style="position:absolute;right:0;bottom:0;">
-              <a href="#/jobs/{{job.id}}">別の画像を表示する</a>           
+              <a href="" ng-click="changeSixNumber()">別の画像を表示する</a>           
             </div>
           </div> 
         </div>  
         <div class="form-group">
-          <input type="text" class="form-control" id="meetTime" placeholder="上の数字を入力">
+          <input type="text" ng-model="validNumber" class="form-control" placeholder="上の数字を入力">
         </div>
         <div class="form-group">
-          <button type="button" class="btn btn-primary btn-block" >新しく登録する</button> 
+          <button type="button" class="btn btn-primary btn-block" ng-click="resetPwd()">再設定申請</button> 
         </div>
     </div>
   </form>

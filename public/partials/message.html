@@ -3,7 +3,7 @@
 		<div class="col-md-8 col-md-offset-2">
 			<div class="row">
 				<div class ="col-md-4" ng-if="!hasContact">
-					no contact
+					相談相手なし
 				</div>
 				<div class ="col-md-4" ng-if="hasContact">
 					<ul class="nav nav-pills nav-stacked">
@@ -16,14 +16,14 @@
 						<div class="panel-body">
 							<div class="col-md-12" ng-repeat="msg in data">
 								<div class="form-group">
-									<span>{{msg.fromUserId===user.id?'I ':msg.fromUserName+'さん '}}</span><span>{{msg.dateString}}</span>
+									<span>{{msg.fromUserId===user.id?'私 ':msg.fromUserName+'さん '}}</span><span>{{msg.dateString}}</span>
 									<pre>{{msg.msg}}</pre>
 								</div>
 							</div>
 						</div>
 					</div>
-					<textarea rows="5" ng-model="replyContent" style="width:100%" placeholder="全角5文字以上入力してください" />
-					<button ng-click="msgReply()" class="btn btn-primary"+" btn-block">回复</button>					
+					<textarea rows="3" ng-model="replyContent" style="width:100%" placeholder="全角5文字以上入力してください" />
+					<button ng-click="msgReply()" class="btn btn-primary"+" btn-block">発表</button>					
 				</div>
 			</div>
 		</div>

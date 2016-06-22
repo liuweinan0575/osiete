@@ -32,11 +32,11 @@ angular.module('questionController', [])
       var isValid = true;
       var error = [];      
       if (!question.title) {
-        error.push('Title cannot be empty!');
+        error.push(alertMsg.titleNotEmpty);
         isValid = false;
       }
       if (!question.content) {
-        error.push('Content cannot be empty!');
+        error.push(alertMsg.contentNotEmpty);
         isValid = false;
       }
       if (!isValid) {
@@ -47,12 +47,7 @@ angular.module('questionController', [])
       AjaxService.addQuestion(newQueston, function(data, status, headers, config) {
         console.log(data)
         $scope.questions.push(newQueston);
-        ngToast.create({
-          className: 'success',
-          content: 'Add question successfully',
-          dismissButton: true,
-          dismissOnTimeout: true
-        }); 
+        $scope.createNgToast('success', alertMsg.addQuestionSuccess);
       }, function() {
       });     
       question.title = ''

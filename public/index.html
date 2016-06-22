@@ -32,10 +32,10 @@
           </ul>
           <ul class="nav navbar-nav navbar-right" ng-if="isLogined!=='unlogined'">
             <li class="dropdown">
-              <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Publiser: {{name}} <span class="caret"></span></a>
+              <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">こんにちは、{{name}} さん <span class="caret"></span></a>
               <ul class="dropdown-menu">
                 <li><a href="#/personInformation">個人情報</a></li>
-                <li><a href="#/passwordReset">パスワード変更</a></li>
+                <li><a href="#/login/passwordReapply">パスワード変更</a></li>
               </ul>
             </li>
             <li><a href="" ng-click="logout()">ログアウト</a></li>
@@ -95,6 +95,7 @@
     <script src="js/controller.js"></script>
     <script src="js/services.js"></script>
     <script src="js/util.js"></script>
+    <script src="js/constants.js"></script>
     <script src="js/controllers/jobDetailController.js"></script>
     <script src="js/controllers/jobListController.js"></script>
     <script src="js/controllers/loginController.js"></script>

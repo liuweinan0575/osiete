@@ -42,7 +42,7 @@ angular.module('messageController', [])
       console.log($scope.newMsg);
 
       AjaxService.addMsg($scope.newMsg, function(data, status, headers, config) {
-        $scope.createNgToast('success','send msg to owner successly');
+        $scope.createNgToast('success', alertMsg.sentMsgSuccess);
         $scope.replyContent='';
         $scope.data.push($scope.newMsg);
         }, function() {

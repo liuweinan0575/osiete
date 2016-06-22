@@ -1,7 +1,7 @@
 <div class="container" style="background:#fff">
 	<div class="row">
 		<div class="col-md-12">
-			<a href="#/question">戻す</a>
+			<a href="" ng-click="goBack()">戻す</a>
 		</div>
 		<div class="col-md-12">
 			<div class="form-group" style="text-align:center">
@@ -10,25 +10,26 @@
 		</div>
 		<div class="col-md-1 col-md-offset-4">
 			<div class="form-group">
-				<a href="" ng-click="filterComment('all')">所有</a>
+				<a href="" ng-click="filterComment('all')">全て</a>
 			</div>
 		</div>
 		<div class="col-md-1">
 			<div class="form-group">
-				<a href="" ng-click="filterComment('good')">好評</a>
+				<a href="" ng-click="filterComment('good')">良い</a>
 			</div>
 		</div>
 		<div class="col-md-1">
 			<div class="form-group">
-				<a href="" ng-click="filterComment('notBad')">還行</a>
+				<a href="" ng-click="filterComment('notBad')">悪くない</a>
 			</div>
 		</div>
 		<div class="col-md-1">
 			<div class="form-group">
-				<a href="" ng-click="filterComment('bad')">差評</a>
+				<a href="" ng-click="filterComment('bad')">良くない</a>
 			</div>
 		</div>
 	</div>
+	<hr>
 	<div class="row" ng-if="comments.length>0">
 		  <div class="list-group" >
     
@@ -43,6 +44,6 @@
 		</div>
 	</div>
 	<div class="row" ng-if="comments.length===0">
-		no comments
+		評判なし
 	</div>
 </div>

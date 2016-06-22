@@ -6,9 +6,6 @@
           個人情報を補足してください
         </label>
       </div>
-      <div class="form-group">
-        <a href="#/login">back to login</a>
-      </div>
     </div>
     <div class="col-md-6 col-md-offset-3">
       <div class="panel panel-default">
@@ -34,7 +31,7 @@
                     <input type="text" ng-model="user.account" class="form-control" disabled >
                   </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group" ng-if="user.userType==='japanese'">
                   <label class="col-md-4 control-label">中国語能力</label>
                   <div class="col-md-8">
                     <input type="radio" ng-model="user.level" value="1">単語だけ読めるほど
@@ -45,6 +42,14 @@
                     <br>
                     <input type="radio" ng-model="user.level" value="4">ぺらぺら喋れるほど
                     <br>
+                  </div>
+                </div>
+                <div class="form-group" ng-if="user.userType==='chinese'">
+                  <label class="col-md-4 control-label">中国語能力</label>
+                  <div class="col-md-8">
+                    <input type="text" ng-model="user.level[0]" class="form-control">
+                    <input type="text" ng-model="user.level[1]" class="form-control">
+                    <input type="text" ng-model="user.level[2]" class="form-control">
                   </div>
                 </div>
                 <div class="form-group">

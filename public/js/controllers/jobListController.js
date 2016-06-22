@@ -22,12 +22,7 @@ angular.module('jobListController', [])
       var condition = $scope.condition;
       
       if (condition.smaller>=0 && condition.larger>=10 && condition.smaller<condition.larger) {
-        ngToast.create({
-          className: 'danger',
-          content: '前一个数字需要小于第二个数字',
-          dismissButton: true,
-          dismissOnTimeout: true
-        });
+        $scope.createNgToast('danger', alertMsg.numCompare);
         return;
       }
       $scope.jobs = _.filter(jobs, function(job) { 
@@ -41,19 +36,18 @@ angular.module('jobListController', [])
         if (!condition[job.period]) {
           return false;
         }
-        if (condition.ability !== job.ability) {
-          return false;
-        }
-        if (condition.personAuth !== job.personAuth) {
+        // if (condition.ability !== job.ability) {
+        //   return false;
+        // }
+        if (condition.personAuth && !job.personAuth) {
           return false;
         }
         if (condition.distict && condition.distict !== job.distict) {
           return false;
         }
-
-        if (condition.address && job.address.indexOf(condition.address) === -1) {
-          return false;
-        }
+        // if (condition.address && job.address.indexOf(condition.address) === -1) {
+        //   return false;
+        // }
         if (condition.smaller<job.moneyCh || condition.larger>job.moneyCh) {
           return false;
         }

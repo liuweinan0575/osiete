@@ -8,6 +8,8 @@
                   <th>用户名</th>
                   <th>用户账号</th>
                   <th>用户类型</th>
+                  <th>身份认证</th>
+                  <th>能力认证</th>
                   <th>认证</th>
                </tr>
             </thead>
@@ -16,6 +18,8 @@
                   <td>{{user.name}}</td>
                   <td>{{user.account}}</td>
                   <td>{{user.userType}}</td>
+                  <td>{{user.personAuth}}</td>
+                  <td>{{user.ability}}</td>
                   <td>                    
                      <button type="button" ng-click="personAuth(user.id)" class="btn btn-primary" >身份认证</button>
                      <button type="button" ng-click="ability(user.id)" class="btn btn-primary" ng-if="user.userType==='chinese'">能力认证</button>

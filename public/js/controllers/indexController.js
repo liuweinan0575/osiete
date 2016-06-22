@@ -34,7 +34,7 @@ angular.module('indexController', [])
         // end = document.cookie.indexOf(";", start);
         // $scope.name = document.cookie.substring(start,end);
         $scope.user = JSON.parse(localStorage.getItem("user"));
-        $scope.name = $scope.user.name?$scope.user.name:$scope.user.account;
+        $scope.name = $scope.user.name;
       } else {
         // cookie out of time
         localStorage.removeItem("user");
@@ -60,6 +60,7 @@ angular.module('indexController', [])
       localStorage.removeItem("user");
       $scope.isLogined = 'unlogined';
       $scope.menuList = $scope.menus.unlogined;
+      $scope.user = {};
       window.location="#/";
     }
 
@@ -77,7 +78,7 @@ angular.module('indexController', [])
 
       AjaxService.addFeedback($scope.feedback, function(data, status, headers, config) {
         $('#feedbackModal').modal('hide');
-        $scope.createNgToast('success','add feedback successly');
+        $scope.createNgToast('success', alertMsg.addFeedbackSuccess);
         $scope.feedback={};
         }, function() {
       });
@@ -91,5 +92,6 @@ angular.module('indexController', [])
         $scope.isLogined = msg.userType;
         $scope.name = msg.name?msg.name:msg.account;
         $scope.menuList = $scope.menus[msg.userType];
+        $scope.user = msg;
     });  
 }]);

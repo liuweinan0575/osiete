@@ -18,7 +18,7 @@ angular.module('applyController', [])
       timeString:moment(new Date()).format('HH:mm'),
       distict:'1',
       address:'',
-      course:'',
+      course:'中国語教え',
       moneyCh:0,
       personAuth:false,
       ability:false,
@@ -40,20 +40,15 @@ angular.module('applyController', [])
       var isValid = true;
       var error = [];      
       if (!apply.address) {
-        error.push('Address cannot be empty!');
+        error.push(alertMsg.addressNotEmpt);
         isValid = false;
       }
-      if (!apply.course) {
-        error.push('Course cannot be empty!');
-        isValid = false;
-      }
+      // if (!apply.course) {
+      //   error.push('Course cannot be empty!');
+      //   isValid = false;
+      // }
       if (!isValid) {
-        ngToast.create({
-          className: 'danger',
-          content: error.join('<br>'),
-          dismissButton: true,
-          dismissOnTimeout: true
-        }); 
+        $scope.createNgToast('danger',error.join('<br>'));
         return;
       }
 
@@ -69,7 +64,8 @@ angular.module('applyController', [])
       console.log(apply);
       AjaxService.addJobs(apply, function(data, status, headers, config) {
         console.log(data);
-        $scope.createNgToast('success','Add jobs sucessfully');
+        $scope.createNgToast('success', alertMsg.addJobSuccess);
+        window.location="#/";
       }, function() {
       });
     }

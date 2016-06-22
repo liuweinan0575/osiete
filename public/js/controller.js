@@ -16,12 +16,14 @@ osieteControllers.controller('ReadmeCtrl', ['$scope',
 
 osieteControllers.controller('PersonInformationCtrl', ['$scope', 'AjaxService',
   function($scope, AjaxService){
-    $scope.user=$scope.loginedUser
+    // $scope.user=$scope.loginedUser
     $scope.modify = function(){
       var user = $scope.user;
       delete user._id
       AjaxService.modifyUser(user, function(data, status, headers, config) {
-        console.log(data)
+        console.log(data);
+        $scope.createNgToast('success', alertMsg.updateUserInfo);
+        localStorage.setItem("user",JSON.stringify(user));
       }, function() {
       }); 
     }
@@ -56,6 +58,42 @@ osieteControllers.controller('RecruitmentDetailCtrl', ['$scope',
     
   }]);
 
+osieteControllers.controller('LoginResetCtrl', ['$scope', 'AjaxService',
+  function($scope, AjaxService){
+    $scope.sixNumber=Math.floor(Math.random()*1000000)+'';   
+    $scope.changeSixNumber = function(){
+      $scope.sixNumber=Math.floor(Math.random()*1000000)+'';
+    };
+    $scope.resetPwd = function(){
+      var re= /\w@\w*\.\w/;
+      var isValid = true;
+      var error = [];
+      if(!re.test($scope.account)){
+          error.push(alertMsg.accountNotEmpty);
+          isValid = false;
+      }
+      if (!$scope.validNumber || $scope.validNumber!==$scope.sixNumber) {
+        error.push(alertMsg.inValidNum);
+        isValid = false;
+      }
+      if (!isValid) {
+        $scope.createNgToast('success', error.join('<br>'));
+        return;
+      }
+
+      AjaxService.findUserByAccount($scope.account, function(data, status, headers, config) {
+        if (data.length===0) {
+          $scope.createNgToast('danger', 'no such user');
+        }else{
+          $scope.createNgToast('success', 'new passwordReset');
+          window.location="#/login/passwordReset";
+        }
+      }, function() {
+      });
+      
+    };
+  }]);
+
 osieteControllers.controller('BidderCtrl', ['$scope', 'AjaxService', '$routeParams',
   function($scope, AjaxService, $routeParams){
     console.log($routeParams)
@@ -79,7 +117,7 @@ osieteControllers.controller('BidderCtrl', ['$scope', 'AjaxService', '$routePara
     });
 
     $scope.winJob = function(){
-      if (!window.confirm("单击“确定”继续。单击“取消”停止。")) {
+      if (!window.confirm(alertMsg.selectUserAsWinner)) {
         return;
       }
       var body = {
@@ -87,8 +125,8 @@ osieteControllers.controller('BidderCtrl', ['$scope', 'AjaxService', '$routePara
         bidderId: $scope.bidder.id
       };
       AjaxService.winJob(body, function(data, status, headers, config) { 
-        console.log(data)   
-        $scope.createNgToast('success','win this job!');
+        console.log(data)
+        $scope.createNgToast('success', alertMsg.winJob);
         $scope.apply.status = 'succeed';
       }, function() {
       });
@@ -107,7 +145,7 @@ osieteControllers.controller('BidderCtrl', ['$scope', 'AjaxService', '$routePara
         jobId: $scope.apply.id
       }
       AjaxService.addComment(body, function(data, status, headers, config) {     
-        $scope.createNgToast('success','comment successfully!');
+        $scope.createNgToast('success', alertMsg.commentSuccess);
       }, function() {
       });
       

@@ -21,17 +21,17 @@ angular.module('loginController', [])
       var isValid = true;
       var error = [];
       if (!loginInf.account) {
-        error.push('Account cannot be empty!');
+        error.push(alertMsg.accountNotEmpty);
         isValid = false;
       }
 
       if (!loginInf.password) {
-        error.push('password cannot be empty!');
+        error.push(alertMsg.pwdNotEmpty);
         isValid = false;
       }
 
       if (!$scope.validNumber || $scope.validNumber!==$scope.sixNumber) {
-        error.push('Wrong valid number!');
+        error.push(alertMsg.inValidNum);
         isValid = false;
       }
 

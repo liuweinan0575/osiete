@@ -27,48 +27,56 @@ angular.module('registerController', [])
       var isValid = true;
       var error = [];
       var registerInf = $scope.registerInf;
+
       if (!registerInf.obeyItem) {
-        error.push('Please aggree the service item!');
+        error.push(alertMsg.aggreeSeriveItem);
         isValid = false;
       }
       if (!registerInf.account) {
-        error.push('Account cannot be empty!');
+        error.push(alertMsg.accountNotEmpty);
         isValid = false;
+      } else {
+        var re= /\w@\w*\.\w/;
+        if(!re.test(registerInf.account)){
+          error.push(alertMsg.accountNotEmpty);
+          isValid = false;
+        }
       }
       if (!$scope.validNumber || $scope.validNumber!==$scope.sixNumber) {
-        error.push('Wrong valid number!');
+        error.push(alertMsg.inValidNum);
         isValid = false;
       }
 
       if (registerInf.password !== registerInf.repetePwd) {
-        error.push('two passwords not the same!');
+        error.push(alertMsg.twoPwdNotSame);
+        isValid = false;
+      }
+      if (registerInf.password.length<9) {
+        error.push(alertMsg.pwdSimple);
         isValid = false;
       }
 
       if (!isValid) {
-        ngToast.create({
-          className: 'success',
-          content: error.join('<br>'),
-          dismissButton: true,
-          dismissOnTimeout: true
-        }); 
+        $scope.createNgToast('success', error.join('<br>'));
         return;
       }
       delete registerInf.obeyItem;
       delete registerInf.repetePwd;
       registerInf.pwd = md5(registerInf.password);
       delete registerInf.password
+      registerInf.name = registerInf.account;
+      if (registerInf.userType==='chinese') {
+        registerInf.level=[];
+      };
 
       AjaxService.addUser(registerInf, function(data, status, headers, config) {
         console.log(data)
         if (data.ok === 1) {
-          ngToast.create({
-            className: 'success',
-            content: 'Regist successfully, please go to your email to active your account!',
-            dismissButton: true,
-            dismissOnTimeout: true
-          });
+          $scope.createNgToast('success', alert.registSuccess);
           window.location="#/login";
+        } else {
+          // data.ok === 0
+          $scope.createNgToast('danger', alert.userExist);
         }
       }, function() {
 

@@ -39,7 +39,7 @@ angular.module('applicationDetailController', [])
         jobId: $scope.apply.id,
       };
       AjaxService.failJob(body, function(data, status, headers, config) {     
-        $scope.createNgToast('success','failed this job!');
+        $scope.createNgToast('success', alertMsg.failJob);
         $scope.apply.status = 'deleted';
       }, function() {
       });
@@ -58,7 +58,7 @@ angular.module('applicationDetailController', [])
         jobId: $scope.apply.id
       }
       AjaxService.addComment(body, function(data, status, headers, config) {     
-        $scope.createNgToast('success','comment successfully!');
+        $scope.createNgToast('success',alertMsg.commentSuccess);
         $scope.apply.status = 'deleted';
       }, function() {
       });

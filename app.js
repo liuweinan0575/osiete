@@ -5,8 +5,12 @@ var path = require('path');
 var fs = require('fs');
 var nodemailer = require('nodemailer');
 var multer  = require('multer');
-var transporter = nodemailer.createTransport('smtps://840960486@qq.com:hvpgksngbcjlbfic@smtp.qq.com');
-
+var transporter = nodemailer.createTransport('smtps://support@osiete.com.cn:JWadmin123@smtp.exmail.qq.com');
+var alertMsg = {
+  noUser: 'No this user!',
+  loginSuccess: 'Login successfully!',
+  pwdIncorrect: 'Password not correct!'
+}
 
 /// 1. dummy db object
 var mockDB = {};
@@ -85,7 +89,7 @@ function _getData(params, query) {
 /// 3. init mongo db
 var db = require('mongoskin').db('mongodb://localhost:27017/osiete');
 
-// db.collection('questions').insert({
+// questions.insert({
 //     id:"question1",
 //     title:"深刻ではないのですが、少し困っています",
 //     user:"pesyaua",
@@ -101,43 +105,51 @@ var db = require('mongoskin').db('mongodb://localhost:27017/osiete');
 /// 4. ajax api
 var anotherRouter = express.Router();
 
+var 
+  users = db.collection('users'),
+  questions = db.collection('questions'),
+  responses = db.collection('responses'),
+  comments = db.collection('comments'),
+  jobs = db.collection('jobs'),
+  feedbacks = db.collection('feedbacks');
+
 /// for questions
 anotherRouter.get('/questions', function(req, res){  
-  db.collection('questions').find().toArray(function(err, result) {
+  questions.find().toArray(function(err, result) {
     if (err) throw err;
     res.json(result);
   });
 });
 anotherRouter.get('/questions/:id', function(req, res){  
-  db.collection('questions').find({id: req.params.id}).toArray(function(err, result) {
+  questions.find({id: req.params.id}).toArray(function(err, result) {
     if (err) throw err;
     res.json(result);
   });
 });
 
 anotherRouter.post('/questions/add', function(req, res){ 
-  db.collection('questions').insert(req.body, {}, function(err, result){  
+  questions.insert(req.body, {}, function(err, result){  
     if (err) throw err;
     res.json(result);
   });
 });
 
 anotherRouter.get('/questions/viewCountPlus/:questionId', function(req, res){
-  db.collection('questions').findAndModify({id: req.params.questionId}, [], {$inc:{viewCount:1}}, {new: true, upset: true}, function(err, result){  
+  questions.findAndModify({id: req.params.questionId}, [], {$inc:{viewCount:1}}, {new: true, upset: true}, function(err, result){  
     if (err) throw err;
     res.json(result);
   });
 });
 
 anotherRouter.get('/responses/:questionId', function(req, res){
-  db.collection('responses').find({questionId: req.params.questionId}).toArray(function(err, result) {
+  responses.find({questionId: req.params.questionId}).toArray(function(err, result) {
     if (err) throw err;
     res.json(result);
   });
 });
 
 anotherRouter.post('/responses/add', function(req, res){  
-  db.collection('responses').insert(req.body, {}, function(err, result){  
+  responses.insert(req.body, {}, function(err, result){  
     if (err) throw err;
     res.json(result);
   });
@@ -145,27 +157,27 @@ anotherRouter.post('/responses/add', function(req, res){
 
 // for jobs
 anotherRouter.get('/jobs', function(req, res){  
-  db.collection('jobs').find().toArray(function(err, result) {
+  jobs.find().toArray(function(err, result) {
     if (err) throw err;
     res.json(result);
   });
 });
 anotherRouter.post('/jobs/add', function(req, res){  
-  db.collection('jobs').insert(req.body, {}, function(err, result){  
+  jobs.insert(req.body, {}, function(err, result){  
     if (err) throw err;
     res.json(result);
   });
 });
 anotherRouter.post('/jobs/apply', function(req, res){ 
   var body = req.body; 
-  db.collection('jobs').findAndModify({id: body.jobId}, [], {$push:{bidderIds:body.applyUserId}}, {new: false, upset: true}, function(err, result){  
+  jobs.findAndModify({id: body.jobId}, [], {$push:{bidderIds:body.applyUserId}}, {new: false, upset: true}, function(err, result){  
     if (err) throw err;
     res.json(result);
   });
 });
 anotherRouter.post('/comments/add', function(req, res){ 
   var body = req.body; 
-  db.collection('comments').insert(req.body, {}, function(err, result){  
+  comments.insert(req.body, {}, function(err, result){  
     if (err) throw err;
     res.json(result);
   });
@@ -173,32 +185,32 @@ anotherRouter.post('/comments/add', function(req, res){
 
 anotherRouter.post('/jobs/fail', function(req, res){ 
   var body = req.body; 
-  db.collection('jobs').findAndModify({id: body.jobId}, [], {$set:{status:'deleted'}}, {new: false, upset: true}, function(err, result){  
+  jobs.findAndModify({id: body.jobId}, [], {$set:{status:'deleted'}}, {new: false, upset: true}, function(err, result){  
     if (err) throw err;
     res.json(result);
   });
 });
 anotherRouter.post('/jobs/win', function(req, res){ 
   var body = req.body; 
-  db.collection('jobs').findAndModify({id: body.jobId}, [], {$set:{status:'succeed', winnerId:body.bidderId}}, {new: false, upset: true}, function(err, result){  
+  jobs.findAndModify({id: body.jobId}, [], {$set:{status:'succeed', winnerId:body.bidderId}}, {new: false, upset: true}, function(err, result){  
     if (err) throw err;
     res.json(result);
   });
 });
 anotherRouter.get('/jobs/:id', function(req, res){  
-  db.collection('jobs').find({id:req.params.id}).toArray(function(err, result) {
+  jobs.find({id:req.params.id}).toArray(function(err, result) {
     if (err) throw err;
     res.json(result);
   });
 });
 anotherRouter.get('/jobs/byUserId/:userId', function(req, res){ 
-  db.collection('jobs').find({ownerId:req.params.userId}).toArray(function(err, result) {
+  jobs.find({ownerId:req.params.userId}).toArray(function(err, result) {
     if (err) throw err;
     res.json(result);
   });
 });
 anotherRouter.get('/jobs/byBidderId/:userId', function(req, res){ 
-  db.collection('jobs').find({bidderIds:req.params.userId}).toArray(function(err, result) {
+  jobs.find({bidderIds:req.params.userId}).toArray(function(err, result) {
     if (err) throw err;
     res.json(result);
   });
@@ -207,47 +219,64 @@ anotherRouter.get('/jobs/byBidderId/:userId', function(req, res){
 // for user
 anotherRouter.post('/users/add', function(req, res){ 
   var user =  req.body;
-  db.collection('users').insert(req.body, {}, function(err, result){  
+  jobs.find({account:user.account}).toArray(function(err, result) {
     if (err) throw err;
-    // setup e-mail data with unicode symbols
-    var mailOptions = {
-        from: '840960486@qq.com', // sender address
-        to: user.account, // list of receivers
-        subject: '用户激活', // Subject line
-        html: 'Dear user, <br > 请点击下面的链接进行激活：<br ><b>http://localhost:3000/#/active/'+user.id+'</b>' // html body
-    };
+    if (result.length===0) {
+      res.json({ok: 0});
+    }else{
+      users.insert(req.body, {}, function(err, result){  
+        if (err) throw err;
+        // setup e-mail data with unicode symbols
+        var mailOptions = {
+            from: 'support@osiete.com.cn', // sender address
+            to: user.account, // list of receivers
+            subject: '用户激活', // Subject line
+            html: 'Dear user, <br > 请点击下面的链接进行激活：<br ><b>http://192.168.1.100:3000/#/active/'+user.id+'</b>' // html body
+        };
 
-    // send mail with defined transport object
-    transporter.sendMail(mailOptions, function(error, info){
-        if(error){
-            return console.log(error);
-        }
-        console.log('Message sent: ' + info.response);
-    });
-    res.json(result);
+        // send mail with defined transport object
+        transporter.sendMail(mailOptions, function(error, info){
+            if(error){
+                return console.log(error);
+            }
+            console.log('Message sent: ' + info.response);
+        });
+        res.json({ok: 1});
+      });
+    }
   });
 });
 anotherRouter.get('/users/activeUser/:id', function(req, res){  
-  db.collection('users').find({id: req.params.id}).toArray(function(err, result) {
+  users.find({id: req.params.id}).toArray(function(err, result) {
     if (err) throw err;
-    res.json(result);
+    var user = result[0];
+    console.log(user);
+    if (user.status==='unValid') {
+      users.findAndModify({id:user.id}, [], {$set:{status:'valid'}}, {new: false, upset: true}, function(err, result){  
+        if (err) throw err;
+        res.json({ok: 1, user: user});
+      });      
+    }else{
+      res.json({ok: 0});
+    }
+    
   });
 });
 anotherRouter.get('/users/ability/:id', function(req, res){ 
-  db.collection('users').findAndModify({id:req.params.id}, [], {$set:{ability:true}}, {new: false, upset: true}, function(err, result){  
+  users.findAndModify({id:req.params.id}, [], {$set:{ability:true}}, {new: false, upset: true}, function(err, result){  
     if (err) throw err;
     res.json(result);
   });
 });
 anotherRouter.get('/users/personAuth/:id', function(req, res){ 
-  db.collection('users').findAndModify({id:req.params.id}, [], {$set:{personAuth:true}}, {new: false, upset: true}, function(err, result){  
+  users.findAndModify({id:req.params.id}, [], {$set:{personAuth:true}}, {new: false, upset: true}, function(err, result){  
     if (err) throw err;
     res.json(result);
   });
 });
 anotherRouter.post('/users/modify', function(req, res){ 
   var user =  req.body;
-  db.collection('users').findAndModify({id:user.id}, [], user, {new: false, upset: true}, function(err, result){  
+  users.findAndModify({id:user.id}, [], user, {new: false, upset: true}, function(err, result){  
     if (err) throw err;
     res.json(result);
   });
@@ -255,22 +284,22 @@ anotherRouter.post('/users/modify', function(req, res){
 anotherRouter.post('/users/login', function(req, res){ 
   var user =  req.body;
   console.log(user.account)
-  db.collection('users').find({account: user.account}).toArray(function(err, result) {
+  users.find({account: user.account}).toArray(function(err, result) {
     if (err) throw err;
     var backJson = {
       ok:1
     };
     if (result.length === 0) {
       backJson.ok=0;
-      backJson.message = 'No this user!';
+      backJson.message = alertMsg.noUser; 
     } else {
       if (user.pwd === result[0].pwd){
         backJson.ok=1;
-        backJson.message = 'Login successfully!';
+        backJson.message = alertMsg.loginSuccess;
         backJson.user = result[0];
       } else {
         backJson.ok=0;
-        backJson.message = 'Password not correct!';
+        backJson.message = alertMsg.pwdIncorrect;
       }
     }
     res.json(backJson);
@@ -279,34 +308,41 @@ anotherRouter.post('/users/login', function(req, res){
 });
 anotherRouter.get('/users/findUserById/:id', function(req, res){
   var ids = req.params.id.split(',');
-  db.collection('users').find({id: {$in:ids}}).toArray(function(err, result) {
+  users.find({id: {$in:ids}}).toArray(function(err, result) {
+    if (err) throw err;
+    res.json(result);
+  });
+});
+
+anotherRouter.get('/users/findUserByAccount/:account', function(req, res){
+  users.find({account: req.params.account}).toArray(function(err, result) {
     if (err) throw err;
     res.json(result);
   });
 });
 
 anotherRouter.get('/users', function(req, res){
-  db.collection('users').find().toArray(function(err, result) {
+  users.find().toArray(function(err, result) {
     if (err) throw err;
     res.json(result);
   });
 });
 
 anotherRouter.get('/comments/:userId', function(req, res){  
-  db.collection('comments').find({to: req.params.userId}).toArray(function(err, result) {
+  comments.find({to: req.params.userId}).toArray(function(err, result) {
     if (err) throw err;
     res.json(result);
   });
 });
 
 anotherRouter.post('/feedbacks/add', function(req, res){ 
-  db.collection('feedbacks').insert(req.body, {}, function(err, result){  
+  feedbacks.insert(req.body, {}, function(err, result){  
     if (err) throw err;
     res.json(result);
   });
 });
 anotherRouter.get('/feedbacks', function(req, res){
-  db.collection('feedbacks').find().toArray(function(err, result) {
+  feedbacks.find().toArray(function(err, result) {
     if (err) throw err;
     res.json(result);
   });

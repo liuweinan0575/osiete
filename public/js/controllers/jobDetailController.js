@@ -22,6 +22,23 @@ angular.module('jobDetailController', [])
         });
       }, function() {
       });
+
+      var user = $scope.user;
+      if (Object.keys(user).length===0) {
+        $scope.applyType = 'no-login';
+      } else {
+        if (user.userType==='japanese') {
+          $scope.applyType = '';
+        }else{
+          //user.userType === recruiter
+          if (($scope.apply.personAuth && (user.personAuth !== $scope.apply.personAuth)) || ($scope.apply.ability && (user.ability !== $scope.apply.ability))) {
+            $scope.applyType = 'failure';
+          }else{
+            $scope.applyType = 'success';
+          }
+        }
+      }
+
     }, function() {
     });
     
@@ -31,26 +48,11 @@ angular.module('jobDetailController', [])
       $(this).tab('show');//显示当前选中的链接及关联的content
     })
 
-    var user = $scope.user;
-    console.log(user.personAuth)
-    if (Object.keys(user).length===0) {
-      $scope.applyType = 'no-login';
-    } else {
-      if (user.userType==='japanese') {
-        $scope.applyType = '';
-      }else{
-        //user.userType === recruiter
-        if (($scope.apply.personAuth && user.personAuth !== $scope.apply.personAuth) || ($scope.apply.ability && user.ability !== $scope.apply.ability)) {
-          $scope.applyType = 'failure';
-        }else{
-          $scope.applyType = 'success';
-        }
-      }
-    }
+    
 
     $scope.applyJob = function(){
       if ($scope.apply.bidderIds.indexOf($scope.user.id)!==-1) {
-        $scope.createNgToast('danger','you have already applied this job!');
+        $scope.createNgToast('danger', alertMsg.haveAppliedJob);
         return;
       }
       var body = {
@@ -58,7 +60,7 @@ angular.module('jobDetailController', [])
         applyUserId: $scope.user.id
       };
       AjaxService.applyJob(body, function(data, status, headers, config) {     
-        $scope.createNgToast('success','applied this job!');
+        $scope.createNgToast('success', alertMsg.applyJobSuccess);
       }, function() {
       });
       $scope.apply.bidderIds.push($scope.user.id);
@@ -79,7 +81,7 @@ angular.module('jobDetailController', [])
 
       AjaxService.addMsg($scope.newMsg, function(data, status, headers, config) {
         $('#chatModal').modal('hide');
-        $scope.createNgToast('success','send msg to owner successly');
+        $scope.createNgToast('success', alertMsg.sentMsgSuccess);
         $scope.chatContent='';
         }, function() {
       });
